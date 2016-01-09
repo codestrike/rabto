@@ -12,6 +12,7 @@ Rabto.ui.init = function() {
 };
 
 Rabto.ui.renderResults = function(results) {
+	Rabto.ui.productList.innerHTML = '';
 	if (results) {
 		results.forEach(function(product) {
 			var card = document.createElement('div');
@@ -20,7 +21,7 @@ Rabto.ui.renderResults = function(results) {
 				<div class="product-image"></div>
 			</div>
 			<div class="product-content">
-				<div>${product.id}</div>
+				<div>${product.title}</div>
 				<div class="product-description">This is basic decription ${product.renter}</div>
 				<div>${product.name}</div>
 			</div>`;
@@ -54,7 +55,7 @@ Rabto.db.init = function() {
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				callback(results);
+				callback(JSON.parse(xhr.responseText));
 			} else if (xhr.readyState == 4 && xhr.status != 200) {
 				callback(null, xhr.status);
 			}
