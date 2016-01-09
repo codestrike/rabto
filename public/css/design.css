@@ -1,6 +1,8 @@
 .center {
-	text-align:center;
-	margin: auto 0;
+	/*text-align: center;*/
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 input {
@@ -9,9 +11,24 @@ input {
 	font-style: sans-serif;
 }
 
-.div128 {
-	width: 400px;
-	height:250px;
-	background-color: black;
-	margin: auto 0;
+.product-card {
+	padding-top: 10px;
+	width: 100%;
+}
+
+.product-content{
+}
+
+
+.product-image {
+		/*width: 20%;*/
+		/*float: left;*/
+		width:64px;
+	height:64px;
+	border-radius: 50%;
+	background-color: blue;
+}
+
+.product-description {
+	/*overflow: hidden;*/
 }
