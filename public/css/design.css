@@ -24,10 +24,16 @@ input, .description {
 	background-color: white;
 }
 
+
 .product-card {
 	display: flex;
 	padding-top: 10px;
 	width: 100%;
+}
+
+.product-description {
+	margin-top: 5px;
+	color: #666;
 }
 
 .product-image {
@@ -35,6 +41,19 @@ input, .description {
 	height:64px;
 	border-radius: 50%;
 	background-color: blue;
+}
+
+.product-content {
+	margin-left: 20px;
+}
+
+.product-title {
+	font-size: large;
+	text-transform: capitalize;
+}
+
+.product-renter {
+	padding: 3px;
 }
 
 /*FAB styles*/
@@ -66,9 +85,6 @@ input, .description {
 }
 
 /*Modal*/
-
-
-
 .modal-dialog {
 	position: fixed;
 	top: 0;
