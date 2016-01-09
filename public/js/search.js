@@ -5,7 +5,7 @@ var Rabto = {
 
 Rabto.ui.init = function() {
 	Rabto.ui.searchBar = document.getElementById('search-bar');
-	Rabto.ui.searchQuery = Rabto.ui.searchBar.getElementsByTagName('input')[0];
+	Rabto.ui.searchQuery = document.getElementById('search-input');
 	Rabto.ui.productList = document.getElementById('product-list');
 
 	Rabto.ui.initEvents();
@@ -60,6 +60,7 @@ Rabto.db.init = function() {
 				callback(null, xhr.status);
 			}
 		}
+		console.log('[db.search]', query);
 	}
 }
 
