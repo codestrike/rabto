@@ -12,6 +12,16 @@ Rabto.ui.init = function() {
 Rabto.ui.initEvents = function() {
 	Rabto.ui.searchBar.addEventListener('submit', function(e) {
 		e.preventDefault();
+		Rabto.db.search(
+			Rabto.ui.searchBar.getElementsByTagName('input')[0].value,
+			function(results, err) {
+				if (err) {
+					console.log('[submit ui.searchBar]', err);
+					return;
+				}
+
+				// TODO: render on the screen
+			})
 		console.log('[submit initEvents]');
 	})
 }
