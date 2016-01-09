@@ -1,5 +1,10 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
 .center {
-	/*text-align: center;*/
 	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
@@ -8,27 +13,19 @@
 input {
 	width: 60%;
 	font-size: xx-large;
-	font-style: sans-serif;
 }
 
 .product-card {
+	display: flex;
 	padding-top: 10px;
 	width: 100%;
 }
 
-.product-content{
-}
-
-
 .product-image {
-		/*width: 20%;*/
-		/*float: left;*/
-		width:64px;
+	width:64px;
 	height:64px;
+	padding: 0;
+	margin: 0;
 	border-radius: 50%;
 	background-color: blue;
-}
-
-.product-description {
-	/*overflow: hidden;*/
 }
