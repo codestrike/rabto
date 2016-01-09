@@ -7,4 +7,4 @@ Share items among your friends.
 	- docker run -it rentmojo:v1 
 	- In second terminal  type
 		-docker exec -it rentmojo:v1 bash
-		-git clone https://gitlab.com/rabta/rentmojo.git 
+		-git clone https://gitlab.com/rabta/rentmojo.git
