@@ -5,7 +5,7 @@
 }
 
 .center {
-	width: 60%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -39,6 +39,7 @@ input, .description {
 .product-image {
 	width:64px;
 	height:64px;
+	margin-left: 10px;
 	border-radius: 50%;
 	background-color: blue;
 }
@@ -134,4 +135,14 @@ input, .description {
 	color:black;
 	font-weight: bold;
 	transition:.3s;
+}
+
+@media only screen and (min-width: 769px) {
+	.center {
+		width: 60%;
+	}
+
+	.product-image {
+		margin-left: 0;
+	}
 }
