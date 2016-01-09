@@ -25,8 +25,8 @@ app.get('/', function (req, res) {
 app.get('/api/q/:search', function (req, res) {
 var search_query = req.params.search;
 query('SELECT i.id, i.title, i.renter, r.name FROM items i left outer join renter r on i.renter = r.id where i.title like $1',['%'+search_query+'%'], function (err, m){
-	(!err)? res.json(m.rows) : console.log(err);res.send("404 Not Found");	
-})
+	(!err)? res.json(m.rows) : console.log(err);
+});
 
 });
 
