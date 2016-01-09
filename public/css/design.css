@@ -59,7 +59,7 @@ input, .description {
 
 /*FAB styles*/
 
-.kc_fab_main_btn{
+.fab-btn {
 	position: fixed;
 	bottom: 1em;
 	right: 1em;
@@ -77,7 +77,7 @@ input, .description {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-.kc_fab_main_btn:focus {
+.fab-btn:focus {
 	transform:scale(1.1);
 	/*transform:rotate(45deg);
 	-ms-transform: rotate(45deg);
