@@ -21,15 +21,34 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
-// Quer for searching
+// api for searching
 app.get('/api/q/:search', function (req, res) {
-var search_query = req.params.search;
-query('SELECT i.id, i.title, i.renter, r.name FROM items i left outer join renter r on i.renter = r.id where i.title like $1',['%'+search_query+'%'], function (err, m){
-	(!err)? res.json(m.rows) : console.log(err);
-});
+	var search_query = req.params.search;
+	query('SELECT i.id, i.title, i.renter, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1',['%'+search_query+'%'], function (err, result){
+		(!err)? res.json(result.rows) : console.log(err);
+	});
 
 });
 
+//Item insert function
+
+app.get('/api/add/item/:title', function (req, res) {
+	var itemTitle = req.params.title;
+	query('INSERT INTO items(title, renter) VALUES($1,1)',[itemTitle],function (err, result){
+		
+		if(!err) {
+			res.sendStatus(200)
+		}
+		else{
+			console.log(err);
+			res.sendStatus(500);
+		}
+	});
+});
+
+
+
+//quering finction
 var query = function(sql, param, callback) {
 	pg.connect(
 		credentials, 
@@ -45,6 +64,10 @@ var query = function(sql, param, callback) {
 			}
 		});
 };
+
+
+
+
 
 
 app.listen(PORT);
