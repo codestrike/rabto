@@ -43,7 +43,6 @@ Rabto.ui.initEvents = function() {
 
 				Rabto.ui.renderResults(results);
 			});
-		console.log('[submit initEvents]');
 	});
 }
 
@@ -60,7 +59,6 @@ Rabto.db.init = function() {
 				callback(null, xhr.status);
 			}
 		}
-		console.log('[db.search]', query);
 	}
 }
 
