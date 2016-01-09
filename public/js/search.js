@@ -21,9 +21,9 @@ Rabto.ui.renderResults = function(results) {
 				<div class="product-image"></div>
 			</div>
 			<div class="product-content">
-				<div>${product.title}</div>
+				<div class="product-title">${product.title}</div>
 				<div class="product-description">This is basic decription ${product.renter}</div>
-				<div>${product.name}</div>
+				<div class="product-renter">by ${product.name}</div>
 			</div>`;
 			Rabto.ui.productList.appendChild(card);
 		});
