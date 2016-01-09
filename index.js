@@ -2,13 +2,17 @@
 
 var express = require('express');
 
-// Constants
-var PORT = 8080;
+// Get port
+var PORT = process.env.PORT || 8080;
 
 // App
 var app = express();
+
+// Setup static folder
+app.use(express.static('public'));
+
 app.get('/', function (req, res) {
-  res.send('Hello world\n');
+	res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(PORT);
