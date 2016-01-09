@@ -48,7 +48,7 @@ app.get('/api/add/item/:title', function (req, res) {
 
 
 
-//quering finction
+//quering function
 var query = function(sql, param, callback) {
 	pg.connect(
 		credentials, 
