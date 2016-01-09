@@ -1,17 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
 .center {
-	text-align:center;
-	margin: auto 0;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 input {
 	width: 60%;
 	font-size: xx-large;
-	font-style: sans-serif;
 }
 
-.div128 {
-	width: 400px;
-	height:250px;
-	background-color: black;
-	margin: auto 0;
+.product-card {
+	display: flex;
+	padding-top: 10px;
+	width: 100%;
+}
+
+.product-image {
+	width:64px;
+	height:64px;
+	padding: 0;
+	margin: 0;
+	border-radius: 50%;
+	background-color: blue;
 }
