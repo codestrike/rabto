@@ -5,9 +5,26 @@
 	<link rel="stylesheet" type="text/css" href="/css/design.css">
 </head>
 <body>
+	<div id="openModal" class="modalDialog">
+		<div>
+			<form>
+				<p>Upload new product for your buddy</p>
+				Title:<input type="input">
+				Description:<input class="description" type="textarea">
+				<button class="modal_btn">Submit</button>
+				<button class="modal_btn">Cancel</button>
+			</form>
+		</div>
+	</div>
+	<div>
+	<button class="kc_fab_main_btn">+</button>
 	<form class="center" id="search-bar">
 		<input type="search" placeholder="Search" />
 	</form>
+
+		
+	</div>
+	
 	<div class="product-list center">
 		<div class="product-card">
 			<div>
@@ -27,7 +44,9 @@
 		</div>
 
 		<div class="product-card">
+			<div>
 			<div class="product-image"></div>
+			</div>
 			<div class="product-content">
 				<div>Title:Canon Camere</div>
 				<div class="product-description">Description:This is a camera aldkasldjalksjdlasjdla</div>
@@ -57,3 +76,4 @@
 	<script src="/js/search.js"></script>
 </body>
 </html>
+
