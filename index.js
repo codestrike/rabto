@@ -33,8 +33,7 @@ app.get('/api/q/:search', function (req, res) {
 //Item insert function
 
 app.get('/api/add/item/:title', function (req, res) {
-	var itemTitle = req.params.title;
-	query('INSERT INTO items(title, renter) VALUES($1,1)',[itemTitle],function (err, result){
+	query('INSERT INTO items(title, renter) VALUES($1,1)',[req.params.title],function (err, result){
 		
 		if(!err) {
 			res.sendStatus(200)
@@ -46,7 +45,22 @@ app.get('/api/add/item/:title', function (req, res) {
 	});
 });
 
+// User Insert Function
 
+app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res){
+	query('INSERT INTO renter(name, email, mobile) VALUES($1, $2, $3)', [req.params.user_name, 
+		req.params.user_email,
+		req.params.user_mobile],function (err,result){
+			if(!err){
+				res.sendStatus(200);
+			}
+			else{
+				console.log(err);
+				res.sendStatus(500);
+			}
+		});
+
+});
 
 //quering function
 var query = function(sql, param, callback) {
