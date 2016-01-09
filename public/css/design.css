@@ -11,8 +11,13 @@
 }
 
 input {
-	width: 60%;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid black;
+	width: 100%;
 	font-size: xx-large;
+	margin-bottom: 5px;
 }
 
 .product-card {
@@ -28,4 +33,95 @@ input {
 	margin: 0;
 	border-radius: 50%;
 	background-color: blue;
+}
+
+.kc_fab_main_btn{
+	position: fixed;
+	bottom: 1em;
+	right: 1em;
+	background-color:#F44336;
+	width:60px;
+	height:60px;
+	border-radius:100%;
+	background:#F44336;
+	border:none;
+	outline:none;
+	color:#FFF;
+	font-size:36px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	transition:.3s;  
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.kc_fab_main_btn:focus {
+	transform:scale(1.1);
+	/*transform:rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);*/
+
+}
+
+/*Modal*/
+
+
+
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.3);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+
+
+
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modalDialog > div {
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 5px;
+	background: white;
+}
+
+
+
+.modal_btn{
+	bottom: 1em;
+	right: 1em;
+	top: 2em;
+	background-color:transparent;
+	/*width:60px;
+	height:60px;*/
+	margin-top: 5px;
+	padding:3px;
+	text-transform: uppercase;
+	/*background:#F44336;*/
+	border:none;
+	outline:none;
+	color:black;
+	font-weight: bold;
+	/*box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	transition:.3s;  */
+}
+
+.description {
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid black;
+
 }
