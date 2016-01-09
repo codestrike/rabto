@@ -1,0 +1,17 @@
+.center {
+	text-align:center;
+	margin: auto 0;
+}
+
+input {
+	width: 60%;
+	font-size: xx-large;
+	font-style: sans-serif;
+}
+
+.div128 {
+	width: 400px;
+	height:250px;
+	background-color: black;
+	margin: auto 0;
+}
