@@ -3,13 +3,6 @@ var Rabto = {
 	db: {} // Database
 };
 
-Rabto.ui.init = function() {
-	Rabto.ui.searchBar = document.getElementById('search-bar');
-	Rabto.ui.searchQuery = document.getElementById('search-input');
-	Rabto.ui.productList = document.getElementById('product-list');
-
-	Rabto.ui.initEvents();
-};
 
 Rabto.ui.renderResults = function(results) {
 	Rabto.ui.productList.innerHTML = '';
@@ -28,7 +21,7 @@ Rabto.ui.renderResults = function(results) {
 			Rabto.ui.productList.appendChild(card);
 		});
 	}
-}
+};
 
 Rabto.ui.initEvents = function() {
 	Rabto.ui.searchBar.addEventListener('submit', function(e) {
@@ -44,23 +37,67 @@ Rabto.ui.initEvents = function() {
 				Rabto.ui.renderResults(results);
 			});
 	});
-}
 
-Rabto.db.init = function() {
-	Rabto.db.search = function(query, callback) {
-		var xhr = new XMLHttpRequest();
-		xhr.open('get', window.location.origin + '/api/q/' + encodeURI(query), true);
-		xhr.send();
+	Rabto.ui.fab.addEventListener('click', function(e) {
+		window.location = window.location.origin + '/#openModal';
+	});
 
-		xhr.onreadystatechange = function() {
+	Rabto.ui.modalCancel.addEventListener('click', function(e) {
+		window.location = window.location.origin + '/#';
+	});
+
+	Rabto.ui.modalSubmit.addEventListener('click', function(e) {
+		var title = Rabto.ui.modalTitle.value;
+		if (!title) return;
+
+		Rabto.db.addItem(title, function(e) {
+			window.location = window.location.origin + '/#';
+		}, true);
+	});
+};
+
+Rabto.ui.init = function() {
+	Rabto.ui.searchBar = document.getElementById('search-bar');
+	Rabto.ui.searchQuery = document.getElementById('search-input');
+	Rabto.ui.productList = document.getElementById('product-list');
+	Rabto.ui.fab = document.getElementById('fab-btn');
+	Rabto.ui.modalSubmit = document.getElementById('modal-submit');
+	Rabto.ui.modalCancel = document.getElementById('modal-cancel');
+	Rabto.ui.modalTitle = document.getElementById('modal-title');
+
+	Rabto.ui.initEvents();
+};
+
+// Rabta.db starts
+Rabto.db.get = function(url, callback, noJSON) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('get', url, true);
+	xhr.send();
+
+	xhr.onreadystatechange = function() {
+		if (typeof callback === 'function') {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				callback(JSON.parse(xhr.responseText));
+				var data = xhr.responseText;
+				if (!noJSON)
+					data = JSON.parse(data);
+
+				callback(data);
 			} else if (xhr.readyState == 4 && xhr.status != 200) {
 				callback(null, xhr.status);
 			}
 		}
 	}
-}
+};
+
+Rabto.db.search = function(query, callback, noJSON) {
+	Rabto.db.get(window.location.origin + '/api/q/' + encodeURI(query), callback, noJSON);
+};
+
+Rabto.db.addItem = function(title, callback, noJSON) {
+	Rabto.db.get(window.location.origin + '/api/add/item/' + encodeURI(title), callback, noJSON);
+};
+
+Rabto.db.init = function() {}
 
 // Fire In The Hole!
 Rabto.db.init();
