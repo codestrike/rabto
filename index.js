@@ -3,7 +3,7 @@
 var express = require('express');
 var pg = require('pg');
 var env = require('node-env-file');
-
+var session = require('express-session');
 
 
 env(__dirname + '/.env');
@@ -18,9 +18,46 @@ var app = express();
 // Setup static folder
 app.use(express.static('public'));
 
+// Session middleware
+app.use(session({
+  secret: 'hummingbearr',
+  resave: true,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 360000 }
+}));
+
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
+
+// session handeling
+app.get('/session/start/:name/:email', function (req, res) {
+	var name = req.params.name;
+	var email = req.params.email;
+	if (name && email) {
+		query('SELECT name FROM renter WHERE email=$1', [email], function(err, result) {
+			if (!err) {
+				if (result.rows && result.rows[0].name == name) {
+					// Cool. Start a session
+					var sess = req.session;
+					sess.email = email;
+					sess.save();
+				}
+				res.redirect('/?i=o');
+			} else {
+				console.log(err);
+			}
+		});
+	}
+});
+
+app.get('/session/end', function (req, res) {
+	req.session.destroy(function(err) {
+		if (err) console.log(err);
+		res.redirect('/?o=i');
+	});
+})
+
 // api for searching
 app.get('/api/q/:search', function (req, res) {
 	var search_query = req.params.search;
@@ -31,7 +68,6 @@ app.get('/api/q/:search', function (req, res) {
 });
 
 //Item insert function
-
 app.get('/api/add/item/:title/:desc', function (req, res) {
 	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2)',[req.params.title,req.params.desc],function (err, result){
 		
@@ -45,8 +81,7 @@ app.get('/api/add/item/:title/:desc', function (req, res) {
 	});
 });
 
-// User Insert Function
-
+// User Insert 
 app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res){
 	query('INSERT INTO renter(name, email, mobile) VALUES($1, $2, $3)', [req.params.user_name, 
 		req.params.user_email,
@@ -62,7 +97,7 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 
 });
 
-//quering function
+// quering 
 var query = function(sql, param, callback) {
 	pg.connect(
 		credentials, 
