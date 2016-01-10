@@ -4,7 +4,12 @@ var express = require('express');
 var pg = require('pg');
 var env = require('node-env-file');
 var session = require('express-session');
-env(__dirname + '/.env');
+try {
+	env(__dirname + '/.env');
+} catch {
+	console.log('[Looks like heroku]');
+}
+
 var exotel = require('exotel')({
     id   : process.env.EXOTEL_ID, 
     token: process.env.EXOTEL_TOCKEN 
