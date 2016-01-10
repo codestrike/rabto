@@ -5,7 +5,7 @@ var Rabto = {
 
 Rabto.ui.sendSMS = function(e) {
 	var renter = e.getAttribute('data-id');
-	var text = "Hey Rabto";
+	var text = e.getAttribute('data-message');
 	Rabto.db.sendSMS(renter, text);
 	console.log('[ui.sendSMS]', renter);
 };
@@ -26,7 +26,7 @@ Rabto.ui.renderResults = function(results) {
 					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}">
 						<i class="fa fa-lg fa-whatsapp"></i>
 					</a> &emsp;
-					<span href="#" class="send-sms" data-id="${product.id}" onclick="Rabto.ui.sendSMS(this);">
+					<span href="#" class="send-sms" data-id="${product.id}" data-message="Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.sendSMS(this);">
 						<i class="fa fa-lg fa-envelope-o"></i>
 					</span> &emsp;
 					${product.name}
