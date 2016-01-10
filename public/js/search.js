@@ -15,7 +15,7 @@ Rabto.ui.renderResults = function(results) {
 			</div>
 			<div class="product-content">
 				<div class="product-title">${product.title}</div>
-				<div class="product-description">This is basic decription ${product.renter}</div>
+				<div class="product-description">${product.description}</div>
 				<div class="product-renter"><i class="fa fa-user"></i> ${product.name}</div>
 			</div>`;
 			Rabto.ui.productList.appendChild(card);
@@ -48,9 +48,10 @@ Rabto.ui.initEvents = function() {
 
 	Rabto.ui.modalSubmit.addEventListener('click', function(e) {
 		var title = Rabto.ui.modalTitle.value;
-		if (!title) return;
+		var description = Rabto.ui.modalDescription.value;
+		if (!title && !description) return;
 
-		Rabto.db.addItem(title, function(e) {
+		Rabto.db.addItem(title, description, function(e) {
 			window.location = window.location.origin + '/#';
 		}, true);
 	});
@@ -64,6 +65,7 @@ Rabto.ui.init = function() {
 	Rabto.ui.modalSubmit = document.getElementById('modal-submit');
 	Rabto.ui.modalCancel = document.getElementById('modal-cancel');
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
+	Rabto.ui.modalDescription = document.getElementById('modal-description');
 
 	Rabto.ui.initEvents();
 };
@@ -93,8 +95,8 @@ Rabto.db.search = function(query, callback, noJSON) {
 	Rabto.db.get(window.location.origin + '/api/q/' + encodeURI(query), callback, noJSON);
 };
 
-Rabto.db.addItem = function(title, callback, noJSON) {
-	Rabto.db.get(window.location.origin + '/api/add/item/' + encodeURI(title), callback, noJSON);
+Rabto.db.addItem = function(title, description, callback, noJSON) {
+	Rabto.db.get(window.location.origin + '/api/add/item/' + encodeURI(title) + '/' + encodeURI(description), callback, noJSON);
 };
 
 Rabto.db.init = function() {}
