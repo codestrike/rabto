@@ -99,6 +99,12 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 
 });
 
+//send sms
+
+app.get('/api/semd/sms/:id/:message', function(err,result){
+
+});
+
 // quering 
 var query = function(sql, param, callback) {
 	pg.connect(
