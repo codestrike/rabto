@@ -6,7 +6,7 @@ var env = require('node-env-file');
 var session = require('express-session');
 try {
 	env(__dirname + '/.env');
-} catch {
+} catch(err) {
 	console.log('[Looks like heroku]');
 }
 
