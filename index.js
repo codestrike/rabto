@@ -37,13 +37,13 @@ app.get('/session/start/:name/:email', function (req, res) {
 	if (name && email) {
 		query('SELECT name FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
-				if (result.rows[0].name == name) {
+				if (result.rows && result.rows[0].name == name) {
 					// Cool. Start a session
 					var sess = req.session;
 					sess.email = email;
 					sess.save();
-					res.redirect('/?i=o');
 				}
+				res.redirect('/?i=o');
 			} else {
 				console.log(err);
 			}
