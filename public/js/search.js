@@ -16,7 +16,12 @@ Rabto.ui.renderResults = function(results) {
 			<div class="product-content">
 				<div class="product-title">${product.title}</div>
 				<div class="product-description">${product.description}</div>
-				<div class="product-renter"><i class="fa fa-user"></i> ${product.name}</div>
+				<div class="product-renter">
+					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}">
+						<i class="fa fa-whatsapp"></i>
+					</a> 
+					${product.name}
+				</div>
 			</div>`;
 			Rabto.ui.productList.appendChild(card);
 		});
