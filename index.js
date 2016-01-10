@@ -4,9 +4,13 @@ var express = require('express');
 var pg = require('pg');
 var env = require('node-env-file');
 var session = require('express-session');
-
-
 env(__dirname + '/.env');
+var exotel = require('exotel')({
+    id   : process.env.EXOTEL_ID, 
+    token: process.env.EXOTEL_TOCKEN 
+});
+
+
 // Get port
 var PORT = process.env.APP_PORT || 8080;
 
@@ -96,6 +100,33 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 				res.sendStatus(500);
 			}
 		});
+
+});
+
+//send sms
+
+app.get('/api/send/sms/:id/:message', function(req,res){
+	query('SELECT mobile FROM renter WHERE id = $1', [req.params.id],function(err,result){
+		if(!err){
+			console.log(result.rows[0].mobile);
+			exotel.sendSMS(result.rows[0].mobile,req.params.message, function(err,result){
+				if(!err){
+					res.sendStatus(200);
+				}
+				else{
+					console.log(err);
+				res.sendStatus(500);
+
+				}
+			});
+		}
+		else{
+			console.log(err);
+				res.sendStatus(500);
+		}
+
+	});
+	
 
 });
 
