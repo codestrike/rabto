@@ -4,6 +4,10 @@
 	font-family: sans-serif;
 }
 
+a {
+	text-decoration: none;
+}
+
 .center {
 	width: 100%;
 	margin-left: auto;
@@ -158,6 +162,14 @@ input, .description {
 
 .send-sms {
 	cursor: pointer;
+}
+
+.footer  {
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	position: fixed;
+	bottom: 5px;
 }
 
 @media only screen and (min-width: 769px) {
