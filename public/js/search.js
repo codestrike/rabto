@@ -48,6 +48,11 @@ Rabto.ui.initEvents = function() {
 					return;
 				}
 
+				if (results) {
+					mixpanel.track("search found");
+				} else {
+					mixpanel.track("search not found", {'query':Rabto.ui.searchQuery})
+				}
 				Rabto.ui.renderResults(results);
 			});
 	});
