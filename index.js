@@ -71,7 +71,7 @@ app.get('/session/end', function (req, res) {
 // api for searching
 app.get('/api/q/:search', function (req, res) {
 	var search_query = req.params.search.toLowerCase();
-	query('SELECT i.id, i.title, i.renter, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
+	query('SELECT r.id, i.title, i.renter, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
 		(!err)? res.json(result.rows) : console.log(err);
 	});
 

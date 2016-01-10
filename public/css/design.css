@@ -156,6 +156,10 @@ input, .description {
 	transition:.3s;
 }
 
+.send-sms {
+	cursor: pointer;
+}
+
 @media only screen and (min-width: 769px) {
 	.center {
 		width: 60%;
