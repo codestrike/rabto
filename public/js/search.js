@@ -3,6 +3,12 @@ var Rabto = {
 	db: {} // Database
 };
 
+Rabto.ui.sendSMS = function(e) {
+	var renter = e.getAttribute('data-id');
+	var text = "Hey Rabto";
+	Rabto.db.sendSMS(renter, text);
+	console.log('[ui.sendSMS]', renter);
+};
 
 Rabto.ui.renderResults = function(results) {
 	Rabto.ui.productList.innerHTML = '';
@@ -20,9 +26,9 @@ Rabto.ui.renderResults = function(results) {
 					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}">
 						<i class="fa fa-lg fa-whatsapp"></i>
 					</a> &emsp;
-					<a href="#" class="send-sms" data-id="${product.id}">
+					<span href="#" class="send-sms" data-id="${product.id}" onclick="Rabto.ui.sendSMS(this);">
 						<i class="fa fa-lg fa-envelope-o"></i>
-					</a> &emsp;
+					</span> &emsp;
 					${product.name}
 				</div>
 			</div>`;
@@ -78,7 +84,7 @@ Rabto.ui.init = function() {
 	Rabto.ui.initEvents();
 };
 
-// Rabta.db starts
+// Rabto.db starts
 Rabto.db.get = function(url, callback, noJSON) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('get', url, true);
@@ -98,6 +104,10 @@ Rabto.db.get = function(url, callback, noJSON) {
 		}
 	}
 };
+
+Rabto.db.sendSMS = function(renter, text) {
+	Rabto.db.get(window.location.origin + '/api/send/sms/' + encodeURI(renter) + '/' + encodeURI(text));
+}
 
 Rabto.db.search = function(query, callback, noJSON) {
 	Rabto.db.get(window.location.origin + '/api/q/' + encodeURI(query), callback, noJSON);
