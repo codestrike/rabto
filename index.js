@@ -1,7 +1,9 @@
 'use strict';
 
 var express = require('express');
+var app = express();
 var pg = require('pg');
+var http = require('http').Server(app);
 var env = require('node-env-file');
 var session = require('express-session');
 try {
@@ -17,12 +19,11 @@ var exotel = require('exotel')({
 
 
 // Get port
-var PORT = process.env.APP_PORT || 8080;
+var PORT = process.env.PORT || process.env.APP_PORT || 8080;
 
 //get postgres configuration
 var credentials = process.env.DATABASE_URL || "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_HOST + "/" + process.env.DB_NAME;
-// App
-var app = express();
+
 
 // Setup static folder
 app.use(express.static('public'));
@@ -157,5 +158,6 @@ var query = function(sql, param, callback) {
 
 
 
-app.listen(PORT);
-console.log('Running on http://localhost:' + PORT);
+http.listen(PORT, function() {
+	console.log('Running on http://localhost:' + PORT);
+});
