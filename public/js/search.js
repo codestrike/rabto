@@ -18,8 +18,11 @@ Rabto.ui.renderResults = function(results) {
 				<div class="product-description">${product.description}</div>
 				<div class="product-renter">
 					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}">
-						<i class="fa fa-whatsapp"></i>
-					</a> 
+						<i class="fa fa-lg fa-whatsapp"></i>
+					</a> &emsp;
+					<a href="#" class="send-sms" data-id="${product.id}">
+						<i class="fa fa-lg fa-envelope-o"></i>
+					</a> &emsp;
 					${product.name}
 				</div>
 			</div>`;
