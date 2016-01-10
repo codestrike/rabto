@@ -15,7 +15,7 @@ var exotel = require('exotel')({
 var PORT = process.env.APP_PORT || 8080;
 
 //get postgres configuration
-var credentials = "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_HOST + "/" + process.env.DB_NAME;
+var credentials = process.env.DATABASE_URL || "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_HOST + "/" + process.env.DB_NAME;
 // App
 var app = express();
 
