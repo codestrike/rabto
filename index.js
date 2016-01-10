@@ -60,7 +60,7 @@ app.get('/session/end', function (req, res) {
 
 // api for searching
 app.get('/api/q/:search', function (req, res) {
-	var search_query = req.params.search;
+	var search_query = req.params.search.toLowerCase();
 	query('SELECT i.id, i.title, i.renter, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
 		(!err)? res.json(result.rows) : console.log(err);
 	});
@@ -69,15 +69,17 @@ app.get('/api/q/:search', function (req, res) {
 
 //Item insert function
 app.get('/api/add/item/:title/:desc', function (req, res) {
-	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2)',[req.params.title,req.params.desc],function (err, result){
-		
-		if(!err) {
-			res.sendStatus(200)
-		}
-		else{
-			console.log(err);
-			res.sendStatus(500);
-		}
+	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2)',[
+		req.params.title.toLowerCase(), 
+		req.params.desc.toLowerCase()
+		], function (err, result){
+			if(!err) {
+				res.sendStatus(200)
+			}
+			else{
+				console.log(err);
+				res.sendStatus(500);
+			}
 	});
 });
 
