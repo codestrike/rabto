@@ -37,7 +37,12 @@ app.use(session({
 }));
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/index.html');
+	var sess = req.session;
+	if (sess.email) {
+		res.sendFile(__dirname + '/index.html');
+	} else {
+		res.sendFile(__dirname + '/login.html');
+	}
 });
 
 // session handeling
@@ -89,9 +94,9 @@ app.get('/api/add/item/:title/:desc', function (req, res) {
 		req.params.desc.toLowerCase()
 		], function (err, result){
 			if(!err) {
-				res.sendStatus(200)
+				res.sendStatus(200);
 			}
-			else{
+			else {
 				console.log(err);
 				res.sendStatus(500);
 			}
