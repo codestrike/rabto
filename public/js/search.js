@@ -11,14 +11,21 @@ Rabto.ui.shareWhatsApp = function(e) {
 	mixpanel.track('share whatsapp');
 };
 
+Rabto.ui.getResizedUrl = function(url, height, width) {
+		if(url){
+            return url.replace(/upload\/\w+/i,`upload/w_${width},h_${height},c_fill`);
+		}
+ };
+
 Rabto.ui.renderResults = function(results) {
 	Rabto.ui.productList.innerHTML = '';
 	if (results) {
 		results.forEach(function(product) {
 			var card = document.createElement('div');
+			console.log(product);
 			card.className = 'product-card';
 			card.innerHTML = `<div>
-				<div class="product-image"></div>
+				<div class="product-image" style="background-image:url('${Rabto.ui.getResizedUrl(product.image_url, 64, 64)}')" ></div>
 			</div>
 			<div class="product-content">
 				<div class="product-title">${product.title}</div>
