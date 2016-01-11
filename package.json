@@ -10,10 +10,11 @@
   "author": "Azad Vishwakarma <azad26195@gmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "body-parser": "^1.14.2",
+    "exotel": "~1.0.1",
     "express": "~4.13.3",
     "express-session": "^1.12.1",
     "node-env-file": "^0.1.8",
-    "pg": "^4.4.3",
-    "exotel": "~1.0.1"
+    "pg": "^4.4.3"
   }
 }
