@@ -38,6 +38,13 @@ a {
 	/*border-bottom: 1px solid #1A237E;*/
 }
 
+.hero-logo {
+	font-size: 20vw;
+	text-align: center;
+	vertical-align: middle;
+	color: #303F9F;
+}
+
 input, .description {
 	border: none;
 	border-bottom: 1px solid #1A237E;
@@ -126,7 +133,10 @@ input, .description {
 	pointer-events: none;
 }
 
-
+.modal-dialog.always-open {
+	opacity: 1 !important;
+	pointer-events: auto !important;
+}
 
 .modal-dialog:target {
 	opacity: 1;
@@ -134,13 +144,14 @@ input, .description {
 }
 
 .modal-dialog > div {
-	width: 400px;
+	max-width: 400px;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
-	border-radius: 5px;
+	border-radius: 2px;
+	opacity: 0.89;
 	background: white;
-	box-shadow: 0 0 0.7em white;
+	box-shadow: 0 0 0.7em black;
 }
 
 .modal-message {
