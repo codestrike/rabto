@@ -15,12 +15,15 @@ Rabto.db.request = function(method, url, data, callback, noJSON) {
 	if (method == 'get') {
 		url = url + '?' + Rabto.lib.urlSerialize(data);
 	} else {
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		body = Rabto.lib.urlSerialize(data);
 	}
 
 	console.log('[db.request]', method, url, body);
 	xhr.open(method, url, true);
+	if (method == 'post') {
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	}
+
 	xhr.send(body);
 
 	xhr.onreadystatechange = function() {
