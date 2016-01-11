@@ -201,4 +201,8 @@ input, .description {
 	#search-bar {
 		margin-top: 2em;
 	}
+
+	.rabto-footer {
+		overflow: hidden;
+	}
 }
