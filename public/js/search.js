@@ -39,6 +39,18 @@ Rabto.ui.renderResults = function(results) {
 };
 
 Rabto.ui.initSearchEvents = function() {
+	Rabto.ui.modalFile.addEventListener('change', function(e) {
+		var selectedImage = Rabto.ui.modalFile.files[0]; 
+		fileReader = new FileReader();
+		if(selectedImage.name.length > 0){
+			fileReader.onload = function(fileLoadEvent) {
+				Rabto.ui.imageData = fileLoadEvent.target.result;
+				console.log("[CLient on File Change]", Rabto.ui.imageData);
+			}
+
+		}
+	});
+
 	Rabto.ui.searchBar.addEventListener('submit', function(e) {
 		e.preventDefault();
 		Rabto.db.search(
@@ -88,6 +100,7 @@ Rabto.ui.initSearch = function() {
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
 	Rabto.ui.modalDescription = document.getElementById('modal-description');
 	Rabto.ui.modalFile = document.getElementById('modal-file');
+	Rabto.ui.imageData = null;
 	Rabto.ui.initSearchEvents();
 };
 
