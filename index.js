@@ -27,7 +27,6 @@ var exotel = require('exotel')({
 		api_secret: process.env.CLOUDY_SECRET
 	});
 
-
 // Get port
 var PORT = process.env.PORT || process.env.APP_PORT || 8080;
 
@@ -105,13 +104,16 @@ app.get('/api/q/:search', function (req, res) {
 
 //Item insert function
 app.get('/api/add/item/:title/:desc/:img', function (req, res) {
+	console.log(req.params.img);
 	var imageData = req.params.img.replace(/\$OYO\$/g,'/');
-	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2)',[
+	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2) returning id',[
 		req.params.title.toLowerCase(), 
 		req.params.desc.toLowerCase()
 		], function (err, result){
 			if(!err) {
 				res.sendStatus(200);
+				// uploadImage(result.rows[0].id, imageData);
+				console.log("[add item id]", result.rows[0].id);
 			}
 			else {
 				console.log(err);
@@ -181,7 +183,20 @@ var query = function(sql, param, callback) {
 		});
 };
 
+// Upload image 
 
+var uploadImage = function(id,	imageData){
+	cloudy.uploader.upload(imageData, function(response){
+		query('UPDATE items SET image_url = $1 WHERE id = $2',[response.secure_url, id], function(err, result){
+			if(!err){
+				callback(result);
+			}
+			else{
+				console.log(err);
+			}
+		});
+	}); 
+};
 
 
 

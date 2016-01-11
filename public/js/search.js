@@ -71,7 +71,6 @@ Rabto.ui.initSearchEvents = function() {
 		var description = Rabto.ui.modalDescription.value;
 		var replacedImageData = Rabto.ui.imageData.replace(/\//g,'$OYO$');
 		if (!title || !description || !replacedImageData) return;
-
 		mixpanel.track('add item');
 		Rabto.db.addItem(title, description, replacedImageData, function(e) {
 			window.location = window.location.origin + '/#';
@@ -102,5 +101,7 @@ Rabto.db.search = function(query, callback, noJSON) {
 };
 
 Rabto.db.addItem = function(title, description, replacedImageData, callback, noJSON) {
-	Rabto.db.get(window.location.origin + '/api/add/item/' + encodeURI(title) + '/' + encodeURI(description) + '/' + encodeURI(replacedImageData), callback, noJSON);
+	var url = window.location.origin + '/api/add/item/' + encodeURI(title) + '/' + encodeURI(description) + '/' + encodeURI(replacedImageData);
+	Rabto.db.get(url, callback, noJSON);
+	console.log("[CLient add itemurl]",url)
 };
