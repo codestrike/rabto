@@ -87,7 +87,7 @@ Rabto.ui.initSearch = function() {
 	Rabto.ui.modalCancel = document.getElementById('modal-cancel');
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
 	Rabto.ui.modalDescription = document.getElementById('modal-description');
-
+	Rabto.ui.modalFile = document.getElementById('modal-file');
 	Rabto.ui.initSearchEvents();
 };
 
