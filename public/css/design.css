@@ -14,46 +14,6 @@ a {
 	margin-right: auto;
 }
 
-#search-bar {
-	display: flex;
-}
-
-.search-input {
-	font-size: xx-large;
-	margin-left: 5px;
-	padding-left: 5px;
-}
-
-.search-logo {
-	width: 20%;
-	margin: 0;
-	font-size: xx-large;
-	font-weight: 900;
-	text-align: center;
-	vertical-align: middle;
-	color: #303F9F;
-}
-
-.hero-logo {
-	text-align: center;
-	vertical-align: middle;
-	color: #303F9F;
-	font-size: 20vw;
-}
-
-.hero-logo aside {
-	font-size: large;
-}
-
-input, .description {
-	border: none;
-	border-bottom: 1px solid #1A237E;
-	width: 100%;
-	margin-bottom: 10px;
-	font-size: large;
-	background-color: white;
-}
-
 .product-list {
 	margin-bottom: 98px;
 }
@@ -190,16 +150,8 @@ input, .description {
 }
 
 @media only screen and (min-width: 769px) {
-	.center {
-		width: 60%;
-	}
-
 	.product-image {
 		margin-left: 0;
-	}
-
-	#search-bar {
-		margin-top: 2em;
 	}
 
 	.rabto-footer {
