@@ -7,6 +7,7 @@ var http = require('http').Server(app);
 var env = require('node-env-file');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var cloudy = require('cloudinary');
 
 try {
 	env(__dirname + '/.env');
@@ -18,6 +19,13 @@ var exotel = require('exotel')({
     id   : process.env.EXOTEL_ID, 
     token: process.env.EXOTEL_TOCKEN 
 });
+
+//Cloudinary Confguration
+	cloudy.config({
+		cloud_name: process.env.CLOUDY_NAME,
+		api_key: process.env.CLOUDY_API_KEY,
+		api_secret: process.env.CLOUDY_SECRET
+	});
 
 
 // Get port
@@ -96,7 +104,8 @@ app.get('/api/q/:search', function (req, res) {
 });
 
 //Item insert function
-app.get('/api/add/item/:title/:desc', function (req, res) {
+app.get('/api/add/item/:title/:desc/:img', function (req, res) {
+	var imageData = req.params.img.replace(/\$OYO\$/g,'/');
 	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2)',[
 		req.params.title.toLowerCase(), 
 		req.params.desc.toLowerCase()
