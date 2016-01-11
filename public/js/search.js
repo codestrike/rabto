@@ -6,6 +6,7 @@ var Rabto = {
 Rabto.ui.sendSMS = function(e) {
 	var renter = e.getAttribute('data-id');
 	var text = e.getAttribute('data-message');
+	mixpanel.track('send sms', {'renter':renter});
 	Rabto.db.sendSMS(renter, text);
 	console.log('[ui.sendSMS]', renter);
 };
@@ -68,8 +69,9 @@ Rabto.ui.initEvents = function() {
 	Rabto.ui.modalSubmit.addEventListener('click', function(e) {
 		var title = Rabto.ui.modalTitle.value;
 		var description = Rabto.ui.modalDescription.value;
-		if (!title && !description) return;
+		if (!title || !description) return;
 
+		mixpanel.track('add item');
 		Rabto.db.addItem(title, description, function(e) {
 			window.location = window.location.origin + '/#';
 		}, true);
