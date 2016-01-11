@@ -11,6 +11,10 @@ Rabto.ui.sendSMS = function(e) {
 	console.log('[ui.sendSMS]', renter);
 };
 
+Rabto.ui.shareWhatsApp = function(e) {
+	mixpanel.track('share whatsapp');
+};
+
 Rabto.ui.renderResults = function(results) {
 	Rabto.ui.productList.innerHTML = '';
 	if (results) {
@@ -24,7 +28,7 @@ Rabto.ui.renderResults = function(results) {
 				<div class="product-title">${product.title}</div>
 				<div class="product-description">${product.description}</div>
 				<div class="product-renter">
-					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}">
+					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.shareWhatsApp(this);">
 						<i class="fa fa-lg fa-whatsapp"></i>
 					</a> &emsp;
 					<span href="#" class="send-sms" data-id="${product.id}" data-message="Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.sendSMS(this);">
