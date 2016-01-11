@@ -1,8 +1,4 @@
-var Rabto = {
-	ui: {}, // UI interaction
-	db: {} // Database
-};
-
+// UI handeling
 Rabto.ui.sendSMS = function(e) {
 	var renter = e.getAttribute('data-id');
 	var text = e.getAttribute('data-message');
@@ -42,7 +38,7 @@ Rabto.ui.renderResults = function(results) {
 	}
 };
 
-Rabto.ui.initEvents = function() {
+Rabto.ui.initSearchEvents = function() {
 	Rabto.ui.searchBar.addEventListener('submit', function(e) {
 		e.preventDefault();
 		Rabto.db.search(
@@ -82,7 +78,7 @@ Rabto.ui.initEvents = function() {
 	});
 };
 
-Rabto.ui.init = function() {
+Rabto.ui.initSearch = function() {
 	Rabto.ui.searchBar = document.getElementById('search-bar');
 	Rabto.ui.searchQuery = document.getElementById('search-input');
 	Rabto.ui.productList = document.getElementById('product-list');
@@ -92,30 +88,10 @@ Rabto.ui.init = function() {
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
 	Rabto.ui.modalDescription = document.getElementById('modal-description');
 
-	Rabto.ui.initEvents();
+	Rabto.ui.initSearchEvents();
 };
 
-// Rabto.db starts
-Rabto.db.get = function(url, callback, noJSON) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('get', url, true);
-	xhr.send();
-
-	xhr.onreadystatechange = function() {
-		if (typeof callback === 'function') {
-			if (xhr.readyState == 4 && xhr.status == 200) {
-				var data = xhr.responseText;
-				if (!noJSON)
-					data = JSON.parse(data);
-
-				callback(data);
-			} else if (xhr.readyState == 4 && xhr.status != 200) {
-				callback(null, xhr.status);
-			}
-		}
-	}
-};
-
+// DB handeling
 Rabto.db.sendSMS = function(renter, text) {
 	Rabto.db.get(window.location.origin + '/api/send/sms/' + encodeURI(renter) + '/' + encodeURI(text));
 }
@@ -127,9 +103,3 @@ Rabto.db.search = function(query, callback, noJSON) {
 Rabto.db.addItem = function(title, description, callback, noJSON) {
 	Rabto.db.get(window.location.origin + '/api/add/item/' + encodeURI(title) + '/' + encodeURI(description), callback, noJSON);
 };
-
-Rabto.db.init = function() {}
-
-// Fire In The Hole!
-Rabto.db.init();
-Rabto.ui.init();

@@ -6,6 +6,8 @@ var pg = require('pg');
 var http = require('http').Server(app);
 var env = require('node-env-file');
 var session = require('express-session');
+var bodyParser = require('body-parser');
+
 try {
 	env(__dirname + '/.env');
 } catch(err) {
@@ -36,24 +38,35 @@ app.use(session({
   cookie: { secure: false, maxAge: 360000 }
 }));
 
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/index.html');
+	var sess = req.session;
+	if (sess.email) {
+		res.sendFile(__dirname + '/index.html');
+	} else {
+		res.sendFile(__dirname + '/login.html');
+	}
 });
 
 // session handeling
-app.get('/session/start/:name/:email', function (req, res) {
-	var name = req.params.name;
-	var email = req.params.email;
-	if (name && email) {
-		query('SELECT name FROM renter WHERE email=$1', [email], function(err, result) {
+app.post('/session/start/', function (req, res) {
+	var email = req.body.email;
+	var pass = req.body.pass;
+	if (pass && email) {
+		query('SELECT pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
-				if (result.rows && result.rows[0].name == name) {
+				if (result.rows && result.rows[0].pass == pass) {
 					// Cool. Start a session
 					var sess = req.session;
 					sess.email = email;
 					sess.save();
 				}
-				res.redirect('/?i=o');
+				res.json({
+					err: null,
+					location: '/?i=o'
+				});
 			} else {
 				console.log(err);
 			}
@@ -89,9 +102,9 @@ app.get('/api/add/item/:title/:desc', function (req, res) {
 		req.params.desc.toLowerCase()
 		], function (err, result){
 			if(!err) {
-				res.sendStatus(200)
+				res.sendStatus(200);
 			}
-			else{
+			else {
 				console.log(err);
 				res.sendStatus(500);
 			}
