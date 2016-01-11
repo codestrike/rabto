@@ -19,15 +19,12 @@ a {
 }
 
 .search-input {
-	/*display: inline-block;*/
 	font-size: xx-large;
-	/*width: 75%;*/
 	margin-left: 5px;
 	padding-left: 5px;
 }
 
 .search-logo {
-	/*display: inline-block;*/
 	width: 20%;
 	margin: 0;
 	font-size: xx-large;
@@ -35,7 +32,6 @@ a {
 	text-align: center;
 	vertical-align: middle;
 	color: #303F9F;
-	/*border-bottom: 1px solid #1A237E;*/
 }
 
 .hero-logo {
@@ -113,10 +109,6 @@ input, .description {
 
 .fab-btn:focus {
 	transform:scale(1.1);
-	/*transform:rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);*/
-
 }
 
 /*Modal*/
