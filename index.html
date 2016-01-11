@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Rabto</title>
-	<link rel="stylesheet" type="text/css" href="/css/design.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>rabto - Share Stuff With Your Friends</title>
 	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/mui.min.css">
 </head>
 <body>
 	<!-- TODO: modal to login or signup a user -->
@@ -23,13 +26,23 @@
 	
 	<div id="openModal" class="modal-dialog">
 		<div>
-			<form>
-				<p class="modal-message">Upload new product for your buddy</p>
-				<input type="input" placeholder="Title" id="modal-title">
-				<input class="description" type="textarea" placeholder="Description" id="modal-description">
-				<input class="upload" type="file" placeholer="Upload File" id="modal-file">
-				<button class="modal-btn" id="modal-submit">Submit</button>
-				<button class="modal-btn" id="modal-cancel">Cancel</button>
+			<form class="mui-container">
+				<legend>Upload A Product Info For Your Buddy</legend>
+				<div class="mui-textfield">
+					<input id="modal-title" type="text">
+					<label>Title</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-description" type="text">
+					<label>Description</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-file" type="file">
+					<label>Upload An Image Of The Product</label>
+				</div>
+
+				<button class="mui-btn" id="modal-submit">Submit</button>
+				<button class="mui-btn" id="modal-cancel">Cancel</button>
 			</form>
 		</div>
 	</div>
@@ -37,15 +50,18 @@
 
 	<button class="fab-btn" id="fab-btn">+</button>
 
-	<form class="center" id="search-bar">
-		<input class="search-input" id="search-input" type="search" placeholder="Search" autofocus required />
-		<aside class="search-logo">rabto</aside>
-	</form>
+	<section class="mui-container">
+		<form id="search-bar">
+			<div class="mui-textfield">
+				<input id="search-input" type="search" placeholder="Search For Camera Or Book" autofocus required />
+			</div>
+		</form>
+	</section>
 
-	<div class="product-list center" id="product-list">
-	</div>
+	<section class="mui-container product-list" id="product-list">
+	</section>
 
-	<section class="footer">
+	<section class="mui-appbar mui-appbar-height mui--appbar-line-height mui--z2 rabto-footer">
 		Made at <a href="http://twitter.com/@Numa_blr">@Numa_BLR</a> with love by 
 		<a href="http://twitter.com/@ashgkwd">Ashish</a>,
 		<a href="http://twitter.com/@azad26195">Azad</a>,
@@ -54,6 +70,7 @@
 		<a href="http://twitter.com/@heroku">Heroku</a>
 	</section>
 
+	<link rel="stylesheet" type="text/css" href="/css/design.css">
 	<script src="/js/rabto.js"></script>
 	<script src="/js/search.js"></script>
 	<script>

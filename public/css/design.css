@@ -14,50 +14,17 @@ a {
 	margin-right: auto;
 }
 
-#search-bar {
-	display: flex;
-}
-
-.search-input {
-	font-size: xx-large;
-	margin-left: 5px;
-	padding-left: 5px;
-}
-
-.search-logo {
-	width: 20%;
-	margin: 0;
-	font-size: xx-large;
-	font-weight: 900;
-	text-align: center;
-	vertical-align: middle;
-	color: #303F9F;
-}
-
-.hero-logo {
-	font-size: 20vw;
-	text-align: center;
-	vertical-align: middle;
-	color: #303F9F;
-}
-
-input, .description {
-	border: none;
-	border-bottom: 1px solid #1A237E;
-	width: 100%;
-	margin-bottom: 10px;
-	font-size: large;
-	background-color: white;
-}
-
 .product-list {
 	margin-bottom: 98px;
 }
 
-.product-card {
+.rabto-flex {
 	display: flex;
-	padding-top: 10px;
-	width: 100%;
+}
+
+.rabto-item {
+	padding-top: 15px;
+	padding-bottom: 12px;
 }
 
 .product-description {
@@ -65,12 +32,12 @@ input, .description {
 	color: #666;
 }
 
-.product-image {
+.rabto-thumb-circle {
 	width:64px;
 	height:64px;
 	margin-left: 10px;
 	border-radius: 50%;
-	background-color: #303F9F;
+	/*background-color: #303F9F;*/
 }
 
 .product-content {
@@ -136,14 +103,14 @@ input, .description {
 }
 
 .modal-dialog > div {
-	max-width: 400px;
+	/*max-width: 500px;*/
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
 	border-radius: 2px;
 	opacity: 0.89;
 	background: white;
-	box-shadow: 0 0 0.7em black;
+	box-shadow: 0 2px 0.7em black;
 }
 
 .modal-message {
@@ -171,33 +138,26 @@ input, .description {
 	cursor: pointer;
 }
 
-.footer  {
-	background-color: #212121;
+.rabto-footer  {
 	bottom: 0;
-	box-shadow: 0 -3px 6px rgba(0,0,0,0.14), 0 -3px 6px rgba(0,0,0,0.20);
-	color: white;
-	font-size: small;
-	padding: 15px 0;
 	position: fixed;
 	text-align: center;
 	width: 100%;
+	max-height: 64px;
+	overflow: scroll;
 }
 
-.footer a {
+.rabto-footer a {
 	color: white;
 	font-weight: bold;
 }
 
 @media only screen and (min-width: 769px) {
-	.center {
-		width: 60%;
-	}
-
 	.product-image {
 		margin-left: 0;
 	}
 
-	#search-bar {
-		margin-top: 2em;
+	.rabto-footer {
+		overflow: hidden;
 	}
 }

@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Rabto - Share Stuff With Your Friends</title>
-	<link rel="stylesheet" type="text/css" href="/css/design.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>rabto - Share Stuff With Your Friends</title>
 	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/mui.min.css">
 </head>
 <body>
-	<section class="hero-logo">
-		<h1>rabto</h1>
+	<section class="mui-container">
+		<h1 class="mui--text-display4">rabto</h1>
+		<p class="mui--text-title">Share Stuff With Your Friends</p>
+
+		<form id="login-form">
+			<legend>Login To See What Your Friends Have For You</legend>
+			<div class="mui-textfield">
+				<input id="login-email" type="email">
+				<label>Email</label>
+			</div>
+			<div class="mui-textfield">
+				<input id="login-pass" type="password">
+				<label>Password</label>
+			</div>
+			<button id="login-btn" type="submit" class="mui-btn mui-btn--raised">Login</button>
+		</form>
 	</section>
-	<div class="modal-dialog always-open">
-		<div>
-			<form id="login-form">
-				<p class="modal-message">Login To See  What Your Friends Have For You</p>
-				<input type="email" placeholder="youremail@example.com" id="login-email" />
-				<input type="password" placeholder="S3cret3_p@ssw0rd" id="login-pass" />
-				<button id="login-btn" class="btn btn-block">Login</button>
-			</form>
-		</div>
-	</div>
-	<section class="footer">
+
+	<section class="mui-appbar mui-appbar-height mui--appbar-line-height mui--z2 rabto-footer">
 		Made at <a href="http://twitter.com/@Numa_blr">@Numa_BLR</a> with love by 
 		<a href="http://twitter.com/@ashgkwd">Ashish</a>,
 		<a href="http://twitter.com/@azad26195">Azad</a>,
@@ -28,6 +36,7 @@
 		<a href="http://twitter.com/@heroku">Heroku</a>
 	</section>
 
+	<link rel="stylesheet" type="text/css" href="/css/design.css">
 	<script src="/js/rabto.js"></script>
 	<script src="/js/login.js"></script>
 	<script>
