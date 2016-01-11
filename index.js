@@ -46,7 +46,8 @@ app.use(session({
 }));
 
 // Body Parser
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.get('/', function (req, res) {
 	var sess = req.session;
@@ -103,16 +104,17 @@ app.get('/api/q/:search', function (req, res) {
 });
 
 //Item insert function
-app.get('/api/add/item/:title/:desc/:img', function (req, res) {
-	console.log(req.params.img);
-	var imageData = req.params.img.replace(/\$OYO\$/g,'/');
+app.post('/api/add/item', function (req, res) {
+	var title = req.body.title;
+	var desc = req.body.description;
+	var imageData = req.body.replacedImageData;
 	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2) returning id',[
-		req.params.title.toLowerCase(), 
-		req.params.desc.toLowerCase()
+		title, 
+		desc
 		], function (err, result){
 			if(!err) {
 				res.sendStatus(200);
-				// uploadImage(result.rows[0].id, imageData);
+				uploadImage(result.rows[0].id, imageData);
 				console.log("[add item id]", result.rows[0].id);
 			}
 			else {
@@ -189,7 +191,7 @@ var uploadImage = function(id,	imageData){
 	cloudy.uploader.upload(imageData, function(response){
 		query('UPDATE items SET image_url = $1 WHERE id = $2',[response.secure_url, id], function(err, result){
 			if(!err){
-				callback(result);
+				console.log("[server Image upload]", result, response);
 			}
 			else{
 				console.log(err);

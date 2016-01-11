@@ -43,6 +43,7 @@ Rabto.ui.initSearchEvents = function() {
 		var selectedImage = Rabto.ui.modalFile.files[0]; 
 		fileReader = new FileReader();
 		if(selectedImage.name.length > 0){
+			fileReader.readAsDataURL(selectedImage);
 			fileReader.onload = function(fileLoadEvent) {
 				Rabto.ui.imageData = fileLoadEvent.target.result;
 				console.log("[CLient on File Change]", Rabto.ui.imageData);
@@ -79,9 +80,10 @@ Rabto.ui.initSearchEvents = function() {
 	});
 
 	Rabto.ui.modalSubmit.addEventListener('click', function(e) {
+		e.preventDefault();
 		var title = Rabto.ui.modalTitle.value;
 		var description = Rabto.ui.modalDescription.value;
-		var replacedImageData = Rabto.ui.imageData.replace(/\//g,'$OYO$');
+		var replacedImageData = Rabto.ui.imageData;		
 		if (!title || !description || !replacedImageData) return;
 		mixpanel.track('add item');
 		Rabto.db.addItem(title, description, replacedImageData, function(e) {
@@ -100,7 +102,7 @@ Rabto.ui.initSearch = function() {
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
 	Rabto.ui.modalDescription = document.getElementById('modal-description');
 	Rabto.ui.modalFile = document.getElementById('modal-file');
-	Rabto.ui.imageData = null;
+	Rabto.ui.imageData = '';
 	Rabto.ui.initSearchEvents();
 };
 
@@ -114,7 +116,12 @@ Rabto.db.search = function(query, callback, noJSON) {
 };
 
 Rabto.db.addItem = function(title, description, replacedImageData, callback, noJSON) {
-	var url = window.location.origin + '/api/add/item/' + encodeURI(title) + '/' + encodeURI(description) + '/' + encodeURI(replacedImageData);
-	Rabto.db.get(url, callback, noJSON);
+	var data = {
+		'title' : title,
+		'description' : description,
+		'replacedImageData' : replacedImageData
+	}
+	var url = window.location.origin + '/api/add/item/';
+	Rabto.db.post(url, data);
 	console.log("[CLient add itemurl]",url)
 };
