@@ -83,6 +83,7 @@ input, .description {
 /*FAB styles*/
 
 .fab-btn {
+	z-index: 9999;
 	position: fixed;
 	bottom: 1em;
 	right: 1em;
@@ -166,10 +167,18 @@ input, .description {
 
 .footer  {
 	width: 100%;
-	padding: 5px;
+	padding: 15px 5px;
 	text-align: center;
 	position: fixed;
-	bottom: 5px;
+	bottom: 0;
+	background-color: #212121;
+	color: white;
+	box-shadow: 0 -3px 6px rgba(0,0,0,0.14), 0 -3px 6px rgba(0,0,0,0.20);
+}
+
+.footer a {
+	color: white;
+	font-weight: bold;
 }
 
 @media only screen and (min-width: 769px) {
