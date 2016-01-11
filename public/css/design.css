@@ -103,14 +103,14 @@ a {
 }
 
 .modal-dialog > div {
-	max-width: 500px;
+	/*max-width: 500px;*/
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
 	border-radius: 2px;
 	opacity: 0.89;
 	background: white;
-	box-shadow: 0 0 0.7em black;
+	box-shadow: 0 2px 0.7em black;
 }
 
 .modal-message {

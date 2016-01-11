@@ -26,13 +26,23 @@
 	
 	<div id="openModal" class="modal-dialog">
 		<div>
-			<form>
-				<p class="modal-message">Upload new product for your buddy</p>
-				<input type="input" placeholder="Title" id="modal-title">
-				<input class="description" type="textarea" placeholder="Description" id="modal-description">
-				<input class="upload" type="file" placeholer="Upload File" id="modal-file">
-				<button class="modal-btn" id="modal-submit">Submit</button>
-				<button class="modal-btn" id="modal-cancel">Cancel</button>
+			<form class="mui-container">
+				<legend>Upload A Product Info For Your Buddy</legend>
+				<div class="mui-textfield">
+					<input id="modal-title" type="text">
+					<label>Title</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-description" type="text">
+					<label>Description</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-file" type="file">
+					<label>Upload An Image Of The Product</label>
+				</div>
+
+				<button class="mui-btn" id="modal-submit">Submit</button>
+				<button class="mui-btn" id="modal-cancel">Cancel</button>
 			</form>
 		</div>
 	</div>
