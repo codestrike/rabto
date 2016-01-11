@@ -6,6 +6,8 @@ var pg = require('pg');
 var http = require('http').Server(app);
 var env = require('node-env-file');
 var session = require('express-session');
+var bodyParser = require('body-parser');
+
 try {
 	env(__dirname + '/.env');
 } catch(err) {
@@ -36,6 +38,9 @@ app.use(session({
   cookie: { secure: false, maxAge: 360000 }
 }));
 
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get('/', function (req, res) {
 	var sess = req.session;
 	if (sess.email) {
@@ -46,9 +51,9 @@ app.get('/', function (req, res) {
 });
 
 // session handeling
-app.get('/session/start/:name/:email', function (req, res) {
-	var name = req.params.name;
-	var email = req.params.email;
+app.post('/session/start/', function (req, res) {
+	var name = req.body.name;
+	var email = req.body.email;
 	if (name && email) {
 		query('SELECT name FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
