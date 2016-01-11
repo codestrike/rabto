@@ -35,10 +35,14 @@ a {
 }
 
 .hero-logo {
-	font-size: 20vw;
 	text-align: center;
 	vertical-align: middle;
 	color: #303F9F;
+	font-size: 20vw;
+}
+
+.hero-logo aside {
+	font-size: large;
 }
 
 input, .description {
