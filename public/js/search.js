@@ -21,23 +21,23 @@ Rabto.ui.renderResults = function(results) {
 	Rabto.ui.productList.innerHTML = '';
 	if (results) {
 		results.forEach(function(product) {
-			var card = document.createElement('div');
+			var card = document.createElement('section');
 			console.log(product);
-			card.className = 'product-card';
+			card.className = 'rabto-flex rabto-item mui--divider-top';
 			card.innerHTML = `<div>
-				<div class="product-image" style="background-image:url('${Rabto.ui.getResizedUrl(product.image_url, 64, 64)}')" ></div>
+				<div class="rabto-thumb-circle" style="background-image:url('${Rabto.ui.getResizedUrl(product.image_url, 64, 64)}')" ></div>
 			</div>
 			<div class="product-content">
-				<div class="product-title">${product.title}</div>
-				<div class="product-description">${product.description}</div>
-				<div class="product-renter">
-					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.shareWhatsApp(this);">
-						<i class="fa fa-lg fa-whatsapp"></i>
-					</a> &emsp;
-					<span href="#" class="send-sms" data-id="${product.id}" data-message="Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.sendSMS(this);">
-						<i class="fa fa-lg fa-envelope-o"></i>
-					</span> &emsp;
+				<div class="mui--text-subhead">${product.title}</div>
+				<div class="mui--text-body2">${product.description}</div>
+				<div class="mui--text-subhead">
 					${product.name}
+					<a href="whatsapp://send?text=Hi ${product.name}, I want ${product.title}" class="mui-btn" onclick="Rabto.ui.shareWhatsApp(this);">
+						<i class="fa fa-lg fa-whatsapp"></i> WhatsApp
+					</a>
+					<span href="#" class="mui-btn" data-id="${product.id}" data-message="Hi ${product.name}, I want ${product.title}" onclick="Rabto.ui.sendSMS(this);">
+						<i class="fa fa-lg fa-envelope-o"></i> SMS
+					</span> 
 				</div>
 			</div>`;
 			Rabto.ui.productList.appendChild(card);

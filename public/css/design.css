@@ -18,10 +18,13 @@ a {
 	margin-bottom: 98px;
 }
 
-.product-card {
+.rabto-flex {
 	display: flex;
-	padding-top: 10px;
-	width: 100%;
+}
+
+.rabto-item {
+	padding-top: 15px;
+	padding-bottom: 12px;
 }
 
 .product-description {
@@ -29,12 +32,12 @@ a {
 	color: #666;
 }
 
-.product-image {
+.rabto-thumb-circle {
 	width:64px;
 	height:64px;
 	margin-left: 10px;
 	border-radius: 50%;
-	background-color: #303F9F;
+	/*background-color: #303F9F;*/
 }
 
 .product-content {
