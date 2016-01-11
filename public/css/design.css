@@ -176,15 +176,12 @@ input, .description {
 }
 
 .rabto-footer  {
-	/*background-color: #212121;*/
 	bottom: 0;
-	/*box-shadow: 0 -3px 6px rgba(0,0,0,0.14), 0 -3px 6px rgba(0,0,0,0.20);*/
-	/*color: white;*/
-	/*font-size: small;*/
-	/*padding: 15px 0;*/
 	position: fixed;
 	text-align: center;
 	width: 100%;
+	max-height: 64px;
+	overflow: scroll;
 }
 
 .rabto-footer a {
