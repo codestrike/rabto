@@ -52,18 +52,21 @@ app.get('/', function (req, res) {
 
 // session handeling
 app.post('/session/start/', function (req, res) {
-	var name = req.body.name;
 	var email = req.body.email;
-	if (name && email) {
-		query('SELECT name FROM renter WHERE email=$1', [email], function(err, result) {
+	var pass = req.body.pass;
+	if (pass && email) {
+		query('SELECT pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
-				if (result.rows && result.rows[0].name == name) {
+				if (result.rows && result.rows[0].pass == pass) {
 					// Cool. Start a session
 					var sess = req.session;
 					sess.email = email;
 					sess.save();
 				}
-				res.redirect('/?i=o');
+				res.json({
+					err: null,
+					location: '/?i=o'
+				});
 			} else {
 				console.log(err);
 			}

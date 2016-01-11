@@ -13,8 +13,9 @@
 		<div>
 			<form id="login-form">
 				<p class="modal-message">Login To See  What Your Friends Have For You</p>
-				<input type="email" placeholder="youremail@example.com" />
-				<input type="password" placeholder="S3cret3_p@ssw0rd" />
+				<input type="email" placeholder="youremail@example.com" id="login-email" />
+				<input type="password" placeholder="S3cret3_p@ssw0rd" id="login-pass" />
+				<button id="login-btn" class="btn btn-block">Login</button>
 			</form>
 		</div>
 	</div>
@@ -27,6 +28,13 @@
 		<a href="http://twitter.com/@heroku">Heroku</a>
 	</section>
 
+	<script src="/js/rabto.js"></script>
 	<script src="/js/login.js"></script>
+	<script>
+	Rabto.ui.init();
+	Rabto.db.init();
+	Rabto.ui.login.init();
+	Rabto.db.login.init();
+	</script>
 </body>
 </html>
