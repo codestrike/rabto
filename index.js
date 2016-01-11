@@ -117,6 +117,7 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 //send sms
 
 app.get('/api/send/sms/:id/:message', function(req,res){
+	return; // FIXME remove this return to enable sms sending
 	query('SELECT mobile FROM renter WHERE id = $1', [req.params.id],function(err,result){
 		if(!err){
 			console.log(result.rows[0].mobile);
