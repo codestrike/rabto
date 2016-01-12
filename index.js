@@ -51,7 +51,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.get('/', function (req, res) {
 	var sess = req.session;
-	if (sess.email) {
+	if (sess.user && sess.user.email) {
 		res.sendFile(__dirname + '/index.html');
 	} else {
 		res.sendFile(__dirname + '/login.html');
@@ -63,12 +63,16 @@ app.post('/session/start/', function (req, res) {
 	var email = req.body.email;
 	var pass = req.body.pass;
 	if (pass && email) {
-		query('SELECT pass FROM renter WHERE email=$1', [email], function(err, result) {
+		query('SELECT name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
 				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
 					// Cool. Start a session
 					var sess = req.session;
-					sess.email = email;
+					sess.user = {
+						email: email,
+						name: result.rows[0].name,
+						mobile: result.rows[0].mobile
+					};
 					sess.save();
 				}
 				res.json({
