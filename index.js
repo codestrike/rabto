@@ -94,15 +94,32 @@ app.get('/session/end', function (req, res) {
 
 // api for searching
 app.get('/api/q/:search', function (req, res) {
-	var search_query = req.params.search.toLowerCase();
-	query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
-		if (!err) {
-			res.json(result.rows);
-		} else {
-			console.log('[/api/q/:search]', err);
-			res.sendStatus(500);
+	var search_query = req.params.search;
+
+	if (search_query.match(/\:/)){
+		//search with filter
+			 serchFilter(search_query, function(result){
+				if(!result){
+					res.sendStatus(500);
+				}
+				else{
+					res.json(result);
+				}
+				
+			});
 		}
-	});
+
+	else {
+		//search without user filter
+		query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
+			if (!err) {
+				res.json(result.rows);
+			} else {
+				console.log('[/api/q/:search]', err);
+				res.sendStatus(500);
+			}
+		});
+	}
 
 });
 
@@ -204,8 +221,51 @@ var uploadImage = function(id,	imageData){
 };
 
 
+//Search Filter
+
+var serchFilter = function (q,callback){
+	var queryArray = [];
+	var querry = q.split(/\s(.+)/); //  ["user:azad", "My word", ""]
+	queryArray.push(querry[1]); // ["My word"]
+	queryArray.push.apply(queryArray, querry[0].split(':')); // ["My Word", "user", "azad"]
+	console.log(queryArray);
+
+	//if no keyword found 
+	if(!queryArray[0]){
+		console.log(queryArray[2]);
+		query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r ON i.renter = r.id WHERE LOWER(r.name) LIKE $1', ['%'+queryArray[2].toLowerCase()+'%'] , function(err, result){
+				if(!err){
+					// console.log("[Hiee]", result.rows)
+					callback(result.rows);
+				}
+				else{
+					callback(err);
+
+				}
+		});
+
+	}
+	else{
+
+		query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r ON i.renter = r.id WHERE LOWER(r.name) LIKE $1 AND (LOWER(i.title) LIKE $2 OR LOWER(i.description) LIKE $2)', ['%'+queryArray[2].toLowerCase()+'%', '%'+queryArray[0].toLowerCase()+'%' ] , function(err, result){
+				if(!err){
+					// console.log("[Hiee]", result.rows)
+					callback(result.rows);
+				}
+				else{
+					callback(err);
+
+				}
+		});
+
+	}
+
+}
 
 
 http.listen(PORT, function() {
 	console.log('Running on http://localhost:' + PORT);
 });
+
+
+// SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r ON i.renter = r.id WHERE LOWER(r.name) LIKE $1'
