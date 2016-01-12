@@ -179,6 +179,10 @@ a {
 	flex-grow: 1;
 }
 
+.no-sm {
+	display: none;
+}
+
 @media only screen and (min-width: 769px) {
 	.product-image {
 		margin-left: 0;
@@ -186,5 +190,9 @@ a {
 
 	.rabto-footer {
 		overflow: hidden;
+	}
+
+	.no-sm {
+		display: inline-block;
 	}
 }
