@@ -111,7 +111,7 @@ app.get('/api/q/:search', function (req, res) {
 
 	else {
 		//search without user filter
-		query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE i.title LIKE $1 OR i.description LIKE $1',['%'+search_query+'%'], function (err, result){
+		query('SELECT r.id, i.title, i.renter, i.image_url, i.description, r.name FROM items i LEFT OUTER JOIN renter r on i.renter = r.id WHERE LOWER(i.title) LIKE $1 OR LOWER(i.description) LIKE $1',['%'+search_query.toLowerCase()+'%'], function (err, result){
 			if (!err) {
 				res.json(result.rows);
 			} else {
@@ -125,8 +125,8 @@ app.get('/api/q/:search', function (req, res) {
 
 //Item insert function
 app.post('/api/add/item', function (req, res) {
-	var title = req.body.title.toLowerCase();
-	var desc = req.body.description.toLowerCase();
+	var title = req.body.title;
+	var desc = req.body.description;
 	var imageData = req.body.replacedImageData;
 	query('INSERT INTO items(title, renter, description) VALUES($1,1,$2) returning id',[
 		title, 
