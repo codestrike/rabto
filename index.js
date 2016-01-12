@@ -65,26 +65,31 @@ app.post('/session/start/', function (req, res) {
 	if (pass && email) {
 		query('SELECT name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
+				var sess = req.session;
 				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
 					// Cool. Start a session
-					var sess = req.session;
 					sess.user = {
 						email: email,
 						name: result.rows[0].name,
 						mobile: result.rows[0].mobile
 					};
 					sess.save();
+					res.json({
+						err: null,
+						location: '/?i=o',
+						user: sess.user
+					});
+				} else {
+					console.log('[/session/start/ invalid credentials]');
+					res.sendStatus(403);
 				}
-				res.json({
-					err: null,
-					location: '/?i=o'
-				});
 			} else {
 				console.log(err);
 				res.sendStatus(500);
 			}
 		});
 	} else {
+		console.log('[/session/start/ no credentials]');
 		res.sendStatus(403);
 	}
 });
