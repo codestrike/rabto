@@ -65,7 +65,7 @@ app.post('/session/start/', function (req, res) {
 	if (pass && email) {
 		query('SELECT pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
-				if (result.rows && result.rows[0].pass == pass) {
+				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
 					// Cool. Start a session
 					var sess = req.session;
 					sess.email = email;
@@ -77,8 +77,11 @@ app.post('/session/start/', function (req, res) {
 				});
 			} else {
 				console.log(err);
+				res.sendStatus(500);
 			}
 		});
+	} else {
+		res.sendStatus(403);
 	}
 });
 
