@@ -77,8 +77,11 @@ app.post('/session/start/', function (req, res) {
 				});
 			} else {
 				console.log(err);
+				res.sendStatus(500);
 			}
 		});
+	} else {
+		res.sendStatus(403);
 	}
 });
 
