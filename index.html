@@ -46,17 +46,21 @@
 			</form>
 		</div>
 	</div>
-	<div>
 
 	<button class="fab-btn" id="fab-btn">+</button>
 
-	<section class="mui-container">
-		<form id="search-bar">
-			<div class="mui-textfield">
-				<input id="search-input" type="search" placeholder="Search For Camera Or Book" autofocus required />
-			</div>
-		</form>
+	<section class="mui-appbar mui--appbar-line-height">
+		<div class="mui-container rabto-flex">
+			<span id="shell-menu" class="rabto-btn-appbar"><i class="fa fa-bars fa-lg"></i></span>
+			<form id="search-bar" class="rabto-search">
+				<div class="mui-textfield">
+					<input id="search-input" type="search" placeholder="Search For Camera Or Book" autofocus required />
+				</div>
+			</form>
+			<span class="rabto-brand">rabto</span>
+		</div>
 	</section>
+	<output id="shell-user"></output>
 
 	<section class="mui-container product-list" id="product-list">
 	</section>
@@ -72,11 +76,13 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/design.css">
 	<script src="/js/rabto.js"></script>
+	<script src="/js/shell.js"></script>
 	<script src="/js/search.js"></script>
 	<script>
 	// Fire In The Hole!
 	Rabto.db.init();
 	Rabto.ui.init();
+	Rabto.ui.shell.init();
 	Rabto.ui.initSearch();
 	</script>
 </body>

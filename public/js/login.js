@@ -18,6 +18,7 @@ Rabto.ui.login.initEvents = function() {
 			if (d.err) {
 				console.log('[ui.login.btn click]', d.err);
 			} else {
+				Rabto.db.login.setUser(d.user);
 				window.location = window.location.origin + d.location;
 			}
 		});
@@ -34,4 +35,8 @@ Rabto.db.login.makeLogin = function(email, pass, callback) {
 		email: email,
 		pass: pass
 	}, callback);
-}
+};
+
+Rabto.db.login.setUser = function(user) {
+	localStorage.setItem('user', JSON.stringify(user));
+};

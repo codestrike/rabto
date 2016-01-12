@@ -138,6 +138,18 @@ a {
 	cursor: pointer;
 }
 
+.rabto-brand {
+	font-size: large;
+	font-weight: 100;
+	text-transform: lowercase;
+	opacity: 0.5;
+}
+
+.rabto-brand:hover {
+	text-shadow: 0 0 3px rgba(255, 255, 255, 0.83);
+	opacity: 1;
+}
+
 .rabto-footer  {
 	bottom: 0;
 	position: fixed;
@@ -150,6 +162,21 @@ a {
 .rabto-footer a {
 	color: white;
 	font-weight: bold;
+}
+
+.rabto-btn-appbar {
+	margin-right: 15px;
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+.rabto-btn-appbar:hover {
+	opacity: 1;
+}
+
+.rabto-search {
+	display: inline-block;
+	flex-grow: 1;
 }
 
 @media only screen and (min-width: 769px) {
