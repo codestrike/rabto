@@ -89,7 +89,9 @@ Rabto.ui.initSearchEvents = function() {
 		var replacedImageData = Rabto.ui.imageData;		
 		if (!title || !description || !replacedImageData) return;
 		mixpanel.track('add item');
+		Rabto.ui.modalSubmit.disabled = true;
 		Rabto.db.addItem(title, description, replacedImageData, function(e) {
+			Rabto.ui.modalSubmit.disabled = false;
 			window.location = window.location.origin + '/#';
 		}, true);
 	});
@@ -124,6 +126,6 @@ Rabto.db.addItem = function(title, description, replacedImageData, callback, noJ
 		'replacedImageData' : replacedImageData
 	}
 	var url = window.location.origin + '/api/add/item/';
-	Rabto.db.post(url, data);
+	Rabto.db.post(url, data, callback, true);
 	console.log("[CLient add itemurl]",url)
 };
