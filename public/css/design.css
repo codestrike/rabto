@@ -4,14 +4,12 @@
 	font-family: sans-serif;
 }
 
-a {
+a, a:hover {
 	text-decoration: none;
 }
 
 .center {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+	text-align: center;
 }
 
 .product-list {
@@ -25,6 +23,7 @@ a {
 .rabto-item {
 	padding-top: 15px;
 	padding-bottom: 12px;
+	padding-left: 10px;
 }
 
 .product-description {
@@ -35,7 +34,7 @@ a {
 .rabto-thumb-circle {
 	width:64px;
 	height:64px;
-	margin-left: 10px;
+	/*margin-left: 10px;*/
 	border-radius: 50%;
 	/*background-color: #303F9F;*/
 }
@@ -215,6 +214,13 @@ a {
 
 .shell-sidebar-list li:hover {
 	color: skyblue;
+}
+
+#shell-profile-picture {
+	margin: 15px auto;
+	height: 128px;
+	width: 128px;
+	border-radius: 50%;
 }
 
 @media only screen and (min-width: 769px) {
