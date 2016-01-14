@@ -9,6 +9,7 @@ Rabto.ui.shell.init  = function () {
 	context.modalName = document.getElementById('modal-name');
 	context.modalEmail = document.getElementById('modal-email');
 	context.modalMobile = document.getElementById('modal-mobile');
+	context.profilePicture = document.getElementById('shell-profile-picture');
 
 	context.populateUserData();
 	context.initEventListeners();
@@ -20,7 +21,7 @@ Rabto.ui.shell.initEventListeners = function() {
 
 	context.shellMenu.addEventListener('click', function(e) {
 		context.populateProfileData(db.getUser());
-		window.location = window.location.origin + '/#profileModal';
+		window.location = window.location.origin + '/#shell-sidebar';
 	});
 
 	context.modalSave.addEventListener('click', function(e) {
@@ -41,6 +42,7 @@ Rabto.ui.shell.populateUserData = function() {
 	var user = Rabto.db.shell.getUser();
 
 	context.username.innerHTML = user.name;
+	context.profilePicture.style.background = 'url("http://www.gravatar.com/avatar/'+ md5(user.email) +'?s=128")'; 
 	Rabto.ui.shell.populateProfileData(user);
 };
 
