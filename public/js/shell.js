@@ -24,13 +24,14 @@ Rabto.ui.shell.initEventListeners = function() {
 	});
 
 	context.modalSave.addEventListener('click', function(e) {
-		console.log('[modalSave click]', context.modalName.value);
+		context.modalSave.disabled = true;
 		db.updateUser(context.modalName.value, function(d) {
 			var user = db.getUser();
 			user.name = context.modalName.value;
 			db.setUser(user);
 			context.populateUserData();
-			console.log('[ui.shell.modalSave click]', d);
+			context.modalSave.disabled = false;
+			window.location = window.location.origin + '/#';
 		});
 	});
 }
