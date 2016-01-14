@@ -82,10 +82,6 @@ Rabto.ui.initSearchEvents = function() {
 		window.location = window.location.origin + '/#openModal';
 	});
 
-	Rabto.ui.modalCancel.addEventListener('click', function(e) {
-		window.location = window.location.origin + '/#';
-	});
-
 	Rabto.ui.modalSubmit.addEventListener('click', function(e) {
 		e.preventDefault();
 		var title = Rabto.ui.modalTitle.value;
@@ -105,7 +101,6 @@ Rabto.ui.initSearch = function() {
 	Rabto.ui.productList = document.getElementById('product-list');
 	Rabto.ui.fab = document.getElementById('fab-btn');
 	Rabto.ui.modalSubmit = document.getElementById('modal-submit');
-	Rabto.ui.modalCancel = document.getElementById('modal-cancel');
 	Rabto.ui.modalTitle = document.getElementById('modal-title');
 	Rabto.ui.modalDescription = document.getElementById('modal-description');
 	Rabto.ui.modalFile = document.getElementById('modal-file');
