@@ -20,7 +20,7 @@ Rabto.ui.shell.initEventListeners = function() {
 
 	context.shellMenu.addEventListener('click', function(e) {
 		context.populateProfileData(db.getUser());
-		window.location = window.location.origin + '/#profileModal';
+		window.location = window.location.origin + '/#shell-sidebar';
 	});
 
 	context.modalSave.addEventListener('click', function(e) {
