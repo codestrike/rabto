@@ -63,12 +63,13 @@ app.post('/session/start/', function (req, res) {
 	var email = req.body.email;
 	var pass = req.body.pass;
 	if (pass && email) {
-		query('SELECT name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
+		query('SELECT id, name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
 				var sess = req.session;
 				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
 					// Cool. Start a session
 					sess.user = {
+						id: result.rows[0].id,
 						email: email,
 						name: result.rows[0].name,
 						mobile: result.rows[0].mobile
@@ -90,7 +91,7 @@ app.post('/session/start/', function (req, res) {
 		});
 	} else {
 		console.log('[/session/start/ no credentials]');
-		res.sendStatus(403);
+		res.sendStatus(400);
 	}
 });
 
@@ -136,7 +137,7 @@ app.post('/api/add/item', function (req, res) {
 	});
 });
 
-// User Insert 
+// User Insert, Update
 app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res){
 	query('INSERT INTO renter(name, email, mobile) VALUES($1, $2, $3)', [req.params.user_name, 
 		req.params.user_email,
@@ -150,6 +151,23 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 			}
 		});
 
+});
+
+app.post('/api/update/user/', function(req, res) {
+	if (req.body.id && req.body.user_name) {
+		query('UPDATE renter SET name = $1 WHERE id = $2',
+			[req.body.user_name, req.body.id],
+			function (err, result) {
+				if (!err) {
+					res.sendStatus(200);
+				} else {
+					console.log(req.body.id, req.body.user_name, err);
+					res.sendStatus(500);
+				}
+			});
+	} else {
+		res.sendStatus(400);
+	}
 });
 
 //send sms

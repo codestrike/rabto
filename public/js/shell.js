@@ -4,6 +4,7 @@ Rabto.ui.shell = {};
 Rabto.ui.shell.init  = function () {
 	var context = Rabto.ui.shell;
 	context.shellMenu = document.getElementById('shell-menu');
+	context.modalSave = document.getElementById('modal-save');
 	context.username = document.getElementById('shell-user');
 	context.modalName = document.getElementById('modal-name');
 	context.modalEmail = document.getElementById('modal-email');
@@ -16,9 +17,21 @@ Rabto.ui.shell.init  = function () {
 Rabto.ui.shell.initEventListeners = function() {
 	var context = Rabto.ui.shell;
 	var db = Rabto.db.shell;
-	context.shellMenu.addEventListener('click', function() {
+
+	context.shellMenu.addEventListener('click', function(e) {
 		context.populateProfileData(db.getUser());
 		window.location = window.location.origin + '/#profileModal';
+	});
+
+	context.modalSave.addEventListener('click', function(e) {
+		console.log('[modalSave click]', context.modalName.value);
+		db.updateUser(context.modalName.value, function(d) {
+			var user = db.getUser();
+			user.name = context.modalName.value;
+			db.setUser(user);
+			context.populateUserData();
+			console.log('[ui.shell.modalSave click]', d);
+		});
 	});
 }
 
@@ -49,3 +62,15 @@ Rabto.db.shell.getUser = function() {
 		mobile: '0000'
 	});
 };
+
+Rabto.db.shell.setUser = function(user) {
+	localStorage.setItem('user', JSON.stringify(user));
+}
+
+Rabto.db.shell.updateUser = function(name, callback) {
+	console.log('[db.shell.updateUser]', name, Rabto.db.shell.getUser().id);
+	Rabto.db.post(window.location.origin + '/api/update/user', {
+		user_name: name, 
+		id: Rabto.db.shell.getUser().id
+	}, callback, true);
+}
