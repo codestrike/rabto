@@ -24,6 +24,20 @@
 		mixpanel.init("10ae1ef447f15a5170230aa128fe7545");</script>
 	<!-- end Mixpanel -->
 	
+	<div id="shell-sidebar" class="shell-sidebar mui--z5">
+		<section class="shell-sidebar-head mui-appbar">
+			<div class="mui--text-display2">rabto</div>
+			<output id="shell-user" class="mui--text-headline"></output>
+		</section>
+		<section class="shell-sidebar-list">
+			<ul>
+				<li id="shell-profile">My Profile</li>
+				<li id="shell-trusted">Trusted Friends</li>
+				<li id="shell-contacts">All Contacts</li>
+			</ul>
+		</section>
+	</div>
+
 	<div id="openModal" class="modal-dialog">
 		<div>
 			<form class="mui-container">
@@ -72,10 +86,10 @@
 
 	<button class="fab-btn" id="fab-btn">+</button>
 
-	<section class="mui-appbar mui--appbar-line-height">
+	<section class="mui-appbar mui--appbar-min-height mui--appbar-line-height">
 		<div class="mui-container rabto-flex">
 			<span id="shell-menu" class="rabto-btn-appbar">
-				<output id="shell-user" class="no-sm"></output> <i class="fa fa-bars fa-lg"></i>
+				<i class="fa fa-bars fa-lg"></i>
 			</span>
 			<form id="search-bar" class="rabto-search">
 				<div class="mui-textfield">

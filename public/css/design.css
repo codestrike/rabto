@@ -183,6 +183,19 @@ a {
 	display: none;
 }
 
+.shell-sidebar {
+	position: fixed;
+	background-color: white; 
+	height: 100%;
+	width: 275px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	opacity: 1;
+	z-index: 999999;
+	/*pointer-events: none;*/
+}
+
 @media only screen and (min-width: 769px) {
 	.product-image {
 		margin-left: 0;
