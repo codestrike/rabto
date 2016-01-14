@@ -51,7 +51,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.get('/', function (req, res) {
 	var sess = req.session;
-	if (sess.email) {
+	if (sess.user && sess.user.email) {
 		res.sendFile(__dirname + '/index.html');
 	} else {
 		res.sendFile(__dirname + '/login.html');
@@ -63,25 +63,35 @@ app.post('/session/start/', function (req, res) {
 	var email = req.body.email;
 	var pass = req.body.pass;
 	if (pass && email) {
-		query('SELECT pass FROM renter WHERE email=$1', [email], function(err, result) {
+		query('SELECT id, name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
 			if (!err) {
+				var sess = req.session;
 				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
 					// Cool. Start a session
-					var sess = req.session;
-					sess.email = email;
+					sess.user = {
+						id: result.rows[0].id,
+						email: email,
+						name: result.rows[0].name,
+						mobile: result.rows[0].mobile
+					};
 					sess.save();
+					res.json({
+						err: null,
+						location: '/?i=o',
+						user: sess.user
+					});
+				} else {
+					console.log('[/session/start/ invalid credentials]');
+					res.sendStatus(403);
 				}
-				res.json({
-					err: null,
-					location: '/?i=o'
-				});
 			} else {
 				console.log(err);
 				res.sendStatus(500);
 			}
 		});
 	} else {
-		res.sendStatus(403);
+		console.log('[/session/start/ no credentials]');
+		res.sendStatus(400);
 	}
 });
 
@@ -144,7 +154,7 @@ app.post('/api/add/item', function (req, res) {
 	});
 });
 
-// User Insert 
+// User Insert, Update
 app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res){
 	query('INSERT INTO renter(name, email, mobile) VALUES($1, $2, $3)', [req.params.user_name, 
 		req.params.user_email,
@@ -158,6 +168,23 @@ app.get('/api/add/user/:user_name/:user_email/:user_mobile', function (req, res)
 			}
 		});
 
+});
+
+app.post('/api/update/user/', function(req, res) {
+	if (req.body.id && req.body.user_name) {
+		query('UPDATE renter SET name = $1 WHERE id = $2',
+			[req.body.user_name, req.body.id],
+			function (err, result) {
+				if (!err) {
+					res.sendStatus(200);
+				} else {
+					console.log(req.body.id, req.body.user_name, err);
+					res.sendStatus(500);
+				}
+			});
+	} else {
+		res.sendStatus(400);
+	}
 });
 
 //send sms

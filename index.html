@@ -42,20 +42,48 @@
 				</div>
 
 				<button class="mui-btn" id="modal-submit">Submit</button>
-				<button class="mui-btn" id="modal-cancel">Cancel</button>
+				<a class="mui-btn" href="#">Cancel</a>
 			</form>
 		</div>
 	</div>
-	<div>
+
+	<div id="profileModal" class="modal-dialog">
+		<div>
+			<form class="mui-container">
+				<legend>Profile</legend>
+				<div class="mui-textfield">
+					<input id="modal-name" type="text">
+					<label>Full Name</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-email" type="text" disabled="true">
+					<label>Email</label>
+				</div>
+				<div class="mui-textfield">
+					<input id="modal-mobile" type="text" disabled="true">
+					<label>Mobile Number</label>
+				</div>
+
+				<button class="mui-btn" id="modal-save">Save</button>
+				<a class="mui-btn" href="#">Cancel</a>
+			</form>
+		</div>
+	</div>
 
 	<button class="fab-btn" id="fab-btn">+</button>
 
-	<section class="mui-container">
-		<form id="search-bar">
-			<div class="mui-textfield">
-				<input id="search-input" type="search" placeholder="Search For Camera Or Book" autofocus required />
-			</div>
-		</form>
+	<section class="mui-appbar mui--appbar-line-height">
+		<div class="mui-container rabto-flex">
+			<span id="shell-menu" class="rabto-btn-appbar">
+				<output id="shell-user" class="no-sm"></output> <i class="fa fa-bars fa-lg"></i>
+			</span>
+			<form id="search-bar" class="rabto-search">
+				<div class="mui-textfield">
+					<input id="search-input" type="search" placeholder="Search For Camera Or Book" autofocus required />
+				</div>
+			</form>
+			<span class="rabto-brand no-sm">rabto</span>
+		</div>
 	</section>
 
 	<section class="mui-container product-list" id="product-list">
@@ -72,11 +100,13 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/design.css">
 	<script src="/js/rabto.js"></script>
+	<script src="/js/shell.js"></script>
 	<script src="/js/search.js"></script>
 	<script>
 	// Fire In The Hole!
 	Rabto.db.init();
 	Rabto.ui.init();
+	Rabto.ui.shell.init();
 	Rabto.ui.initSearch();
 	</script>
 </body>
