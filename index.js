@@ -83,7 +83,7 @@ passport.use(new GoogleStrategy({
           // console.log('[passport.use accessToken]', count++);
         });
         res.on('end', function() {
-          console.log('[passport.use accessToken end]');
+          console.log('[passport.use accessToken end]', accessToken);
         });
       });
       // req.end();
@@ -108,7 +108,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', ensureAuthenticated, function(req, res) {
-	console.log('[/]', req.user);
+	// console.log('[/]', req.user);
 	res.sendFile(__dirname + '/index.html');
 });
 
@@ -120,7 +120,9 @@ app.get('/login', function(req, res) {
 // session handeling
 // passport based auth
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.google.com/m8/feeds'] }),
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 
+  	'https://www.google.com/m8/feeds',
+  	'email'] }),
   function(req, res){
     // The request will be redirected to Google for authentication, so this
     // function will not be called.

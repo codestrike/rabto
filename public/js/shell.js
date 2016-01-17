@@ -20,7 +20,7 @@ Rabto.ui.shell.initEventListeners = function() {
 	var db = Rabto.db.shell;
 
 	context.shellMenu.addEventListener('click', function(e) {
-		context.populateProfileData(db.getUser());
+		// context.populateProfileData(db.getUser());
 		window.location = window.location.origin + '/#shell-sidebar';
 	});
 
@@ -49,8 +49,8 @@ Rabto.ui.shell.populateUserData = function() {
 
 Rabto.ui.shell.populateProfileData = function(user) {
 	var context = Rabto.ui.shell;
-	// context.modalName.value = user.displayName;
-	// context.modalEmail.value = user.email;
+	context.modalName.value = user.displayName;
+	context.modalEmail.value = user.emails[0].value;
 	// context.modalMobile.value = user.mobile;
 };
 
