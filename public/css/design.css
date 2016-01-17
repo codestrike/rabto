@@ -77,6 +77,16 @@ a, a:hover {
 	transform:scale(1.1);
 }
 
+.mui-btn--fab {
+	z-index: 9999;
+	position: fixed;
+	bottom: 2em;
+	right: 2em;
+	transition:.3s;
+	/*font-size:36px;*/
+	vertical-align: middle;
+}
+
 /*Modal*/
 .modal-dialog {
 	position: fixed;
@@ -188,15 +198,18 @@ a, a:hover {
 	height: 100%;
 	width: 275px;
 	top: 0;
-	left: 0;
+	left: -500px;
 	bottom: 0;
 	opacity: 0;
 	z-index: 999999;
 	pointer-events: none;
+	transition: opacity 400ms ease-in-out;
+	transition: left 100ms ease-in-out;
 }
 
 .shell-sidebar:target {
 	opacity: 1;
+	left: 0;
 	pointer-events: all;
 }
 
