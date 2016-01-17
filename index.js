@@ -44,6 +44,7 @@ var credentials = process.env.DATABASE_URL || "postgres://" + process.env.DB_USE
 // get Google API credentials
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+var GOOGLE_AUTH_CALLBACK = process.env.GOOGLE_AUTH_CALLBACK;
 
 // Setup static folder
 app.use(express.static('public'));
@@ -69,7 +70,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/google/callback"
+    callbackURL: GOOGLE_AUTH_CALLBACK
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
