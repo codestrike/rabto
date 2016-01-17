@@ -83,7 +83,7 @@ passport.use(new GoogleStrategy({
           // console.log('[passport.use accessToken]', count++);
         });
         res.on('end', function() {
-          console.log('[passport.use accessToken end]', buff);
+          console.log('[passport.use accessToken end]');
         });
       });
       // req.end();
@@ -94,6 +94,7 @@ passport.use(new GoogleStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Google account with a user record in your database,
       // and return that user instead.
+      delete profile._raw;
       return done(null, profile);
     });
   }
@@ -107,12 +108,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', ensureAuthenticated, function(req, res) {
-	// var sess = req.session;
-	// if (sess.user && sess.user.email) {
-		res.sendFile(__dirname + '/index.html');
-	// } else {
-	// 	res.sendFile(__dirname + '/login.html');
-	// }
+	console.log('[/]', req.user);
+	res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/login', function(req, res) {
@@ -121,49 +118,6 @@ app.get('/login', function(req, res) {
 });
 
 // session handeling
-app.post('/session/start/', function (req, res) {
-	var email = req.body.email;
-	var pass = req.body.pass;
-	if (pass && email) {
-		query('SELECT id, name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
-			if (!err) {
-				var sess = req.session;
-				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
-					// Cool. Start a session
-					sess.user = {
-						id: result.rows[0].id,
-						email: email,
-						name: result.rows[0].name,
-						mobile: result.rows[0].mobile
-					};
-					sess.save();
-					res.json({
-						err: null,
-						location: '/?i=o',
-						user: sess.user
-					});
-				} else {
-					console.log('[/session/start/ invalid credentials]');
-					res.sendStatus(403);
-				}
-			} else {
-				console.log(err);
-				res.sendStatus(500);
-			}
-		});
-	} else {
-		console.log('[/session/start/ no credentials]');
-		res.sendStatus(400);
-	}
-});
-
-app.get('/session/end', function (req, res) {
-	req.session.destroy(function(err) {
-		if (err) console.log(err);
-		res.redirect('/?o=i');
-	});
-});
-
 // passport based auth
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.google.com/m8/feeds'] }),
@@ -183,8 +137,14 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+// api for user data
+app.get('/api/get/user', ensureAuthenticated, function(req, res) {
+	// return loggedin user
+	res.json(req.user);
+});
+
 // api for searching
-app.get('/api/q/:search', function (req, res) {
+app.get('/api/q/:search', ensureAuthenticated, function (req, res) {
 	var search_query = req.params.search;
 
 	if (search_query.match(/\:/)){
