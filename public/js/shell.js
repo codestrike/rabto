@@ -20,7 +20,7 @@ Rabto.ui.shell.initEventListeners = function() {
 	var db = Rabto.db.shell;
 
 	context.shellMenu.addEventListener('click', function(e) {
-		context.populateProfileData(db.getUser());
+		// context.populateProfileData(db.getUser());
 		window.location = window.location.origin + '/#shell-sidebar';
 	});
 
@@ -39,18 +39,19 @@ Rabto.ui.shell.initEventListeners = function() {
 
 Rabto.ui.shell.populateUserData = function() {
 	var context = Rabto.ui.shell;
-	var user = Rabto.db.shell.getUser();
-
-	context.username.innerHTML = user.name;
-	context.profilePicture.style.background = 'url("http://www.gravatar.com/avatar/'+ md5(user.email) +'?s=128")'; 
-	Rabto.ui.shell.populateProfileData(user);
+	Rabto.db.shell.getUser(function(user) {
+		console.log('[ui.shell.populateUserData user]', user);
+		context.username.innerHTML = user.displayName;
+		context.profilePicture.style.background = 'url("' + user.photos[0].value.replace('?sz=50', '?sz=128') +'")'; 
+		Rabto.ui.shell.populateProfileData(user);
+	});
 };
 
 Rabto.ui.shell.populateProfileData = function(user) {
 	var context = Rabto.ui.shell;
-	context.modalName.value = user.name;
-	context.modalEmail.value = user.email;
-	context.modalMobile.value = user.mobile;
+	context.modalName.value = user.displayName;
+	context.modalEmail.value = user.emails[0].value;
+	// context.modalMobile.value = user.mobile;
 };
 
 // DB
@@ -58,12 +59,8 @@ Rabto.db.shell = {};
 
 Rabto.db.shell.init = function() {};
 
-Rabto.db.shell.getUser = function() {
-	return JSON.parse(localStorage.getItem('user') || {
-		name: null,
-		email: null,
-		mobile: '0000'
-	});
+Rabto.db.shell.getUser = function(callback) {
+	Rabto.db.get(window.location.origin + '/api/get/user', callback);
 };
 
 Rabto.db.shell.setUser = function(user) {

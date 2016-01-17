@@ -4,9 +4,12 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 var http = require('http').Server(app);
+var https = require('https');
 var env = require('node-env-file');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var cloudy = require('cloudinary');
 
 try {
@@ -19,6 +22,11 @@ var exotel = require('exotel')({
     id   : process.env.EXOTEL_ID, 
     token: process.env.EXOTEL_TOCKEN 
 });
+
+var passportOptions = {
+	host: 'www.google.com',
+	path: '/m8/feeds/contacts/default/full?alt=json&oauth_token='
+};
 
 //Cloudinary Confguration
 	cloudy.config({
@@ -33,6 +41,9 @@ var PORT = process.env.PORT || process.env.APP_PORT || 8080;
 //get postgres configuration
 var credentials = process.env.DATABASE_URL || "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_HOST + "/" + process.env.DB_NAME;
 
+// get Google API credentials
+var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 // Setup static folder
 app.use(express.static('public'));
@@ -45,65 +56,97 @@ app.use(session({
   cookie: { secure: false, maxAge: 360000 }
 }));
 
+// passport store and get user object
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+// configure passport for google 
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:8080/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+      passportOptions.path += accessToken;
+      var buff = '';
+      var count = 0;
+      var req = https.get(passportOptions, function(res) {
+        res.on('data', function(d) {
+          buff += d;
+          // console.log('[passport.use accessToken]', count++);
+        });
+        res.on('end', function() {
+          console.log('[passport.use accessToken end]', accessToken);
+        });
+      });
+      // req.end();
+      req.on('error', function(err) {
+        console.log('[passport.use req.on error]', err);
+      });
+      // To keep the example simple, the user's Google profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the Google account with a user record in your database,
+      // and return that user instead.
+      delete profile._raw;
+      return done(null, profile);
+    });
+  }
+));
+
 // Body Parser
 // app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-app.get('/', function (req, res) {
-	var sess = req.session;
-	if (sess.user && sess.user.email) {
-		res.sendFile(__dirname + '/index.html');
-	} else {
-		res.sendFile(__dirname + '/login.html');
-	}
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/', ensureAuthenticated, function(req, res) {
+	// console.log('[/]', req.user);
+	res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/login', function(req, res) {
+	req.logout();
+	res.sendFile(__dirname + '/login.html');
 });
 
 // session handeling
-app.post('/session/start/', function (req, res) {
-	var email = req.body.email;
-	var pass = req.body.pass;
-	if (pass && email) {
-		query('SELECT id, name, mobile, pass FROM renter WHERE email=$1', [email], function(err, result) {
-			if (!err) {
-				var sess = req.session;
-				if (result.rows && result.rows[0] && result.rows[0].pass == pass) {
-					// Cool. Start a session
-					sess.user = {
-						id: result.rows[0].id,
-						email: email,
-						name: result.rows[0].name,
-						mobile: result.rows[0].mobile
-					};
-					sess.save();
-					res.json({
-						err: null,
-						location: '/?i=o',
-						user: sess.user
-					});
-				} else {
-					console.log('[/session/start/ invalid credentials]');
-					res.sendStatus(403);
-				}
-			} else {
-				console.log(err);
-				res.sendStatus(500);
-			}
-		});
-	} else {
-		console.log('[/session/start/ no credentials]');
-		res.sendStatus(400);
-	}
+// passport based auth
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 
+  	'https://www.google.com/m8/feeds',
+  	'email'] }),
+  function(req, res){
+    // The request will be redirected to Google for authentication, so this
+    // function will not be called.
 });
 
-app.get('/session/end', function (req, res) {
-	req.session.destroy(function(err) {
-		if (err) console.log(err);
-		res.redirect('/?o=i');
-	});
-})
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+});
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+// api for user data
+app.get('/api/get/user', ensureAuthenticated, function(req, res) {
+	// return loggedin user
+	res.json(req.user);
+});
 
 // api for searching
-app.get('/api/q/:search', function (req, res) {
+app.get('/api/q/:search', ensureAuthenticated, function (req, res) {
 	var search_query = req.params.search;
 
 	if (search_query.match(/\:/)){
@@ -287,7 +330,12 @@ var serchFilter = function (q,callback){
 
 	}
 
-}
+};
+
+function ensureAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+};
 
 
 http.listen(PORT, function() {
