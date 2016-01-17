@@ -39,7 +39,7 @@ Rabto.ui.shell.initEventListeners = function() {
 
 Rabto.ui.shell.populateUserData = function() {
 	var context = Rabto.ui.shell;
-	var user = Rabto.db.shell.getUser(function(user) {
+	Rabto.db.shell.getUser(function(user) {
 		console.log('[ui.shell.populateUserData user]', user);
 		context.username.innerHTML = user.displayName;
 		context.profilePicture.style.background = 'url("' + user.photos[0].value.replace('?sz=50', '?sz=128') +'")'; 
